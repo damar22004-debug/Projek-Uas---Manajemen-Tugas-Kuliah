@@ -1,59 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+﻿#  Dashboard Management Tugas Kuliah (UAS Edition)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Dashboard manajemen tugas kuliah berbasis **Laravel** yang dirancang untuk memenuhi persyaratan tugas besar/UAS. Aplikasi ini mengusung desain *Glassmorphism* modern untuk memantau progres akademik secara efisien.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##  Dokumentasi Project (Progress Report)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Deskripsi
+Aplikasi ini adalah platform manajemen tugas (To-Do List) khusus mahasiswa. Dikembangkan menggunakan Framework Laravel untuk memastikan sistem yang stabil, aman, dan mudah dikelola dalam memantau deadline perkuliahan.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. User Story
+- **Sebagai Mahasiswa**, saya ingin menginput tugas berdasarkan mata kuliah agar jadwal belajar lebih terstruktur.
+- **Sebagai Pengguna**, saya ingin melihat visualisasi jumlah tugas (Belum Mulai, Proses, Selesai) agar bisa menentukan prioritas.
+- **Sebagai Pengguna**, saya ingin antarmuka yang responsif agar bisa diakses baik dari laptop maupun smartphone.
 
-## Learning Laravel
+### 3. SRS (Software Requirements Specification)
+#### Feature List:
+- **Authentication**: Sistem login & register user.
+- **Task Management (CRUD)**: Create, Read, Update, Delete data tugas.
+- **Dashboard Analytics**: Statistik otomatis jumlah tugas berdasarkan status.
+- **Kalender Interaktif**: Navigator tanggal untuk memantau tenggat waktu.
+- **Glassmorphism UI**: Efek blur dan transparansi menggunakan Tailwind CSS.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 4. UML (Unified Modeling Language)
+- **Use Case Diagram**: Aktor (Mahasiswa) melakukan interaksi manajemen tugas dan melihat dashboard.
+- **Activity Diagram**: Alur data dari input user -> Controller Laravel -> Database MySQL.
+- **Sequence Diagram**: Urutan proses request dari Router hingga pengembalian View Blade.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. Mock-Up
+Desain mengacu pada konsep visual di `image_01bf23.png`:
+- **Glass-Effect**: Menggunakan `backdrop-filter: blur()` pada sidebar dan kartu.
+- **Color Palette**: Warna pastel untuk indikator status tugas (Biru, Kuning, Hijau, Merah).
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+##  SDLC (Software Development Life Cycle)
+Proyek ini dikembangkan dengan model **Agile**:
+1. **Planning**: Identifikasi fitur dan skema database.
+2. **Design**: Pembuatan mockup UI Glassmorphism.
+3. **Implementation**: Coding backend (Laravel) dan frontend (Tailwind).
+4. **Testing**: Uji coba fungsionalitas fitur CRUD.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+##  Instalasi Lokal
 
-## Contributing
+1. **Clone Repo**:
+   ```bash
+   git clone https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah.git
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Install dependencies**:
+   ```bash
+   composer install
+   npm install
+   ```
 
-## Code of Conduct
+3. **Konfigurasi environment**:
+   - Salin `.env.example` menjadi `.env` dan sesuaikan pengaturan database.
+   - Jalankan `php artisan key:generate`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Migrasi & Seeder (opsional)**:
+   ```bash
+   php artisan migrate --seed
+   ```
 
-## Security Vulnerabilities
+5. **Jalankan server lokal**:
+   ```bash
+   php artisan serve
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+> Catatan: Project ini dibangun menggunakan Laravel; beberapa file default Laravel dihapus dari README untuk fokus pada dokumentasi proyek.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+Jika Anda ingin, saya bisa menyimpan perubahan ini, menyelesaikan merge, lalu mendorong hasil ke GitHub. 
