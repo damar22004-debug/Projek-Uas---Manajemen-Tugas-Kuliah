@@ -9,3 +9,17 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Exclude build & vendor files from archives
+/vendor/** export-ignore
+/node_modules/** export-ignore
+/public/build/** export-ignore
+/storage/** export-ignore
+
+# Lockfiles
+composer.lock export-ignore
+package-lock.json export-ignore
+
+# Mark generated lockfiles as vendored for linguist
+composer.lock linguist-vendored
+package-lock.json linguist-vendored
