@@ -1,79 +1,102 @@
-﻿#  Dashboard Management Tugas Kuliah (UAS Edition)
+﻿# 📋 Dashboard Management Tugas Kuliah (UAS Edition)
 
-Dashboard manajemen tugas kuliah berbasis **Laravel** yang dirancang untuk memenuhi persyaratan tugas besar/UAS. Aplikasi ini mengusung desain *Glassmorphism* modern untuk memantau progres akademik secara efisien.
+<p align="center">
+  <a href="https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah"><img src="https://img.shields.io/badge/project-Manajemen--Tugas-blue" alt="Project"></a>
+  <a href="https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah/actions"><img src="https://img.shields.io/github/actions/workflow/status/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah/ci.yml?branch=main" alt="CI"></a>
+  <a href="https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/release-v1.0.0-green" alt="Release"></a>
+</p>
 
----
-
-##  Dokumentasi Project (Progress Report)
-
-### 1. Deskripsi
-Aplikasi ini adalah platform manajemen tugas (To-Do List) khusus mahasiswa. Dikembangkan menggunakan Framework Laravel untuk memastikan sistem yang stabil, aman, dan mudah dikelola dalam memantau deadline perkuliahan.
-
-### 2. User Story
-- **Sebagai Mahasiswa**, saya ingin menginput tugas berdasarkan mata kuliah agar jadwal belajar lebih terstruktur.
-- **Sebagai Pengguna**, saya ingin melihat visualisasi jumlah tugas (Belum Mulai, Proses, Selesai) agar bisa menentukan prioritas.
-- **Sebagai Pengguna**, saya ingin antarmuka yang responsif agar bisa diakses baik dari laptop maupun smartphone.
-
-### 3. SRS (Software Requirements Specification)
-#### Feature List:
-- **Authentication**: Sistem login & register user.
-- **Task Management (CRUD)**: Create, Read, Update, Delete data tugas.
-- **Dashboard Analytics**: Statistik otomatis jumlah tugas berdasarkan status.
-- **Kalender Interaktif**: Navigator tanggal untuk memantau tenggat waktu.
-- **Glassmorphism UI**: Efek blur dan transparansi menggunakan Tailwind CSS.
-
-### 4. UML (Unified Modeling Language)
-- **Use Case Diagram**: Aktor (Mahasiswa) melakukan interaksi manajemen tugas dan melihat dashboard.
-- **Activity Diagram**: Alur data dari input user -> Controller Laravel -> Database MySQL.
-- **Sequence Diagram**: Urutan proses request dari Router hingga pengembalian View Blade.
-
-### 5. Mock-Up
-Desain mengacu pada konsep visual di `image_01bf23.png`:
-- **Glass-Effect**: Menggunakan `backdrop-filter: blur()` pada sidebar dan kartu.
-- **Color Palette**: Warna pastel untuk indikator status tugas (Biru, Kuning, Hijau, Merah).
+Ringkasan singkat: Aplikasi manajemen tugas kuliah berbasis **Laravel**, menampilkan fitur CRUD tugas, autentikasi pengguna, dashboard statistik, dan kalender interaktif dengan desain *Glassmorphism*.
 
 ---
 
-##  SDLC (Software Development Life Cycle)
-Proyek ini dikembangkan dengan model **Agile**:
-1. **Planning**: Identifikasi fitur dan skema database.
-2. **Design**: Pembuatan mockup UI Glassmorphism.
-3. **Implementation**: Coding backend (Laravel) dan frontend (Tailwind).
-4. **Testing**: Uji coba fungsionalitas fitur CRUD.
+## 📌 Daftar Isi
+1. [Fitur](#-fitur)
+2. [Prasyarat](#-prasyarat)
+3. [Instalasi & Jalankan](#-instalasi--jalankan)
+4. [Konfigurasi Environment](#-konfigurasi-environment)
+5. [Perintah Penting](#-perintah-penting)
+6. [Struktur Proyek Singkat](#-struktur-proyek-singkat)
+7. [Kontribusi](#-kontribusi)
+8. [Lisensi & Kontak](#-lisensi--kontak)
 
 ---
 
-##  Instalasi Lokal
-
-1. **Clone Repo**:
-   ```bash
-   git clone https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah.git
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   composer install
-   npm install
-   ```
-
-3. **Konfigurasi environment**:
-   - Salin `.env.example` menjadi `.env` dan sesuaikan pengaturan database.
-   - Jalankan `php artisan key:generate`.
-
-4. **Migrasi & Seeder (opsional)**:
-   ```bash
-   php artisan migrate --seed
-   ```
-
-5. **Jalankan server lokal**:
-   ```bash
-   php artisan serve
-   ```
+## ✨ Fitur
+- Autentikasi: register, login, reset password
+- Manajemen tugas (CRUD) dengan status (Belum Mulai / Proses / Selesai)
+- Dashboard statistik otomatis berdasarkan status tugas
+- Kalender interaktif untuk melihat tenggat waktu tugas
+- UI responsive dengan Tailwind CSS (Glassmorphism)
 
 ---
 
-> Catatan: Project ini dibangun menggunakan Laravel; beberapa file default Laravel dihapus dari README untuk fokus pada dokumentasi proyek.
+## ⚙️ Prasyarat
+- PHP >= 8.1
+- Composer
+- Node.js & npm
+- MySQL (atau DB lain yang didukung Laravel)
 
 ---
 
-Jika Anda ingin, saya bisa menyimpan perubahan ini, menyelesaikan merge, lalu mendorong hasil ke GitHub. 
+## 🚀 Instalasi & Jalankan (lokal)
+1. Clone repository:
+```bash
+git clone https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah.git
+cd Projek-Uas---Manajemen-Tugas-Kuliah
+```
+2. Install dependencies PHP & JS:
+```bash
+composer install
+npm install
+```
+3. Salin file env dan generate app key:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+4. Konfig database di `.env`, lalu migrasi dan seed (opsional):
+```bash
+php artisan migrate --seed
+```
+5. Compile aset dan jalankan server:
+```bash
+npm run build   # atau npm run dev untuk development
+php artisan serve
+```
+
+---
+
+## 🛠️ Perintah Penting
+- Jalankan test: `php artisan test`
+- Linting/Pint: `./vendor/bin/pint --test`
+- Jalankan scheduler: `php artisan schedule:work`
+
+---
+
+## 🗂️ Struktur Proyek Singkat
+- `app/` — Controllers, Models, dan Logic aplikasi
+- `routes/` — Definisi route (web/api)
+- `resources/views/` — Blade templates
+- `database/` — Migrations & Seeders
+- `public/` — Aset publik
+
+---
+
+## 🤝 Kontribusi
+Suka perbaikan atau fitur baru? Silakan:
+1. Fork repository
+2. Buat branch fitur: `git checkout -b feature/nama-fitur`
+3. Commit dan push ke fork Anda
+4. Buat Pull Request ke `main` branch
+
+---
+
+## 📄 Lisensi & Kontak
+Project ini menggunakan lisensi **MIT**.
+Untuk pertanyaan/collab: ✉️ damar.22004@gmail.com
+
+---
+
+> Tip: Jika Anda ingin saya tambahkan badge CI, screenshot, atau contoh penggunaan API, beri tahu file gambar atau detail yang ingin ditampilkan.
+
