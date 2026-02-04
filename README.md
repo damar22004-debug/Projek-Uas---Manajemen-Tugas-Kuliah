@@ -69,10 +69,4 @@ Proyek ini dikembangkan dengan model **Agile**:
    php artisan serve
    ```
 
----
 
-> Catatan: Project ini dibangun menggunakan Laravel; beberapa file default Laravel dihapus dari README untuk fokus pada dokumentasi proyek.
-
----
-
-Jika Anda ingin, saya bisa menyimpan perubahan ini, menyelesaikan merge, lalu mendorong hasil ke GitHub. 
