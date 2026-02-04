@@ -28,7 +28,6 @@ Aplikasi ini adalah platform manajemen tugas (To-Do List) khusus mahasiswa. Dike
 - **Sequence Diagram**: Urutan proses request dari Router hingga pengembalian View Blade.
 
 ### 5. Mock-Up
-Desain mengacu pada konsep visual di `image_01bf23.png`:
 - **Glass-Effect**: Menggunakan `backdrop-filter: blur()` pada sidebar dan kartu.
 - **Color Palette**: Warna pastel untuk indikator status tugas (Biru, Kuning, Hijau, Merah).
 
