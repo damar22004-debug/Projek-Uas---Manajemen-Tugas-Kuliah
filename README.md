@@ -9,7 +9,7 @@ Aplikasi manajemen tugas berbasis Laravel dengan tampilan Glassmorphism untuk me
 - Kalender Interaktif: Lihat tenggat tugas pada kalender.
 - Filter & Pencarian: Filter tugas berdasarkan mata kuliah, tanggal, dan status.
 - Notifikasi/Reminder (sederhana): Pengingat tugas mendekati deadline.
-- UI: Tailwind CSS dengan efek Glassmorphism (backdrop-filter: blur()).
+- UI: Tailwind CSS dengan efek Glassmorphism (backdrop-filter: blur)).
 - Database: MySQL (migrasi & seeder tersedia).
 
 ## Struktur Halaman
