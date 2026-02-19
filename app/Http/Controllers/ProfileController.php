@@ -35,7 +35,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return back()->with('success', 'Profil berhasil diperbarui!');
+        return redirect('/profile')->with('success', 'Profil berhasil diperbarui!');
     }
 
     /**

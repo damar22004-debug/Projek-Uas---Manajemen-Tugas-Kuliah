@@ -34,10 +34,10 @@ class GoogleController extends Controller
             } else {
                 // Jika belum ada, buat user baru
              $newUser = User::create([
-    'name' => $user->name,
-    'email' => $user->email,
-    'google_id'=> $user->id,
-    'password' => Hash::make(Str::random(16)) // Membuat password acak yang aman
+        'name' => $user->name,
+        'email' => $user->email,
+        'google_id'=> $user->id,
+        'password' => Hash::make(Str::random(16)) // Membuat password acak yang aman
 ]);
                
 
