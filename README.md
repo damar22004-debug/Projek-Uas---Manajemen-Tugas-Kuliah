@@ -375,30 +375,444 @@ http://localhost:8000/api
 ```
 
 ### Authentication
-Semua endpoint API memerlukan Bearer token dari Sanctum.
+Semua endpoint API memerlukan Bearer token dari Laravel Sanctum. Dapatkan token dengan login terlebih dahulu atau gunakan akun dari seeder.
 
-### Endpoints
+#### Mendapatkan Token
 
-#### Tasks
+**Login (Web)**:
+- Akses `http://localhost:8000/login`
+- Gunakan credentials dari seeder atau daftar akun baru
+- Token tersimpan di session
 
-| Method | Endpoint | Deskripsi |
-|--------|----------|-----------|
-| GET | `/tasks` | Ambil semua tugas user |
-| POST | `/tasks` | Buat tugas baru |
-| GET | `/tasks/{id}` | Ambil detail tugas |
-| PUT | `/tasks/{id}` | Update tugas |
-| DELETE | `/tasks/{id}` | Hapus tugas |
+**Via API** (jika endpoint tersedia):
+```bash
+POST /login
+Content-Type: application/json
 
-#### Users
+{
+  "email": "user@example.com",
+  "password": "password"
+}
+```
 
-| Method | Endpoint | Deskripsi |
-|--------|----------|-----------|
-| GET | `/user` | Ambil profil user |
-| POST | `/user/profile-photo` | Upload foto profil |
+---
 
-### Contoh Request
+### API Endpoints Overview
 
-**Create Task**:
+| Resource | Method | Endpoint | Deskripsi |
+|----------|--------|----------|-----------|
+| Tasks | GET | `/tasks` | Ambil semua tugas user |
+| Tasks | POST | `/tasks` | Buat tugas baru |
+| Tasks | GET | `/tasks/{id}` | Ambil detail tugas |
+| Tasks | PUT | `/tasks/{id}` | Update tugas |
+| Tasks | DELETE | `/tasks/{id}` | Hapus tugas |
+| Users | GET | `/user` | Ambil profil user |
+| Users | POST | `/user/profile-photo` | Upload foto profil |
+
+---
+
+### Detailed Endpoint Documentation
+
+#### 1️⃣ GET /tasks - Ambil Semua Tugas
+
+**Request:**
+```http
+GET /api/tasks HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Accept: application/json
+```
+
+**Query Parameters (Optional):**
+| Parameter | Type | Deskripsi |
+|-----------|------|-----------|
+| status | string | Filter by status: `pending`, `in_progress`, `completed` |
+| priority | string | Filter by priority: `low`, `medium`, `high` |
+| sort | string | Sort by: `due_date`, `created_at`, `priority` |
+| per_page | integer | Items per page (default: 15) |
+
+**Success Response (200 OK):**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "title": "Tugas Algoritma",
+      "description": "Membuat program sorting",
+      "status": "pending",
+      "priority": "high",
+      "due_date": "2026-02-28",
+      "created_at": "2026-02-19T10:30:00Z",
+      "updated_at": "2026-02-19T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "title": "Tugas Web Development",
+      "description": "Buat landing page",
+      "status": "in_progress",
+      "priority": "medium",
+      "due_date": "2026-02-25",
+      "created_at": "2026-02-19T11:00:00Z",
+      "updated_at": "2026-02-19T11:00:00Z"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "per_page": 15,
+    "to": 2,
+    "total": 2
+  }
+}
+```
+
+---
+
+#### 2️⃣ POST /tasks - Buat Tugas Baru
+
+**Request:**
+```http
+POST /api/tasks HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Content-Type: application/json
+Accept: application/json
+```
+
+**Request Body:**
+```json
+{
+  "title": "Tugas Algoritma",
+  "description": "Membuat program sorting dengan bubble sort",
+  "status": "pending",
+  "priority": "high",
+  "due_date": "2026-02-28"
+}
+```
+
+**Validation Rules:**
+| Field | Rule | Deskripsi |
+|-------|------|-----------|
+| title | required, string, max:255 | Judul tugas |
+| description | nullable, string | Deskripsi (optional) |
+| status | required, enum | pending, in_progress, completed |
+| priority | required, enum | low, medium, high |
+| due_date | required, date | Format: YYYY-MM-DD |
+
+**Success Response (201 Created):**
+```json
+{
+  "data": {
+    "id": 3,
+    "user_id": 1,
+    "title": "Tugas Algoritma",
+    "description": "Membuat program sorting dengan bubble sort",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-02-28",
+    "created_at": "2026-02-19T12:00:00Z",
+    "updated_at": "2026-02-19T12:00:00Z"
+  },
+  "message": "Task created successfully"
+}
+```
+
+**Error Response (422 Unprocessable Entity):**
+```json
+{
+  "message": "The given data was invalid.",
+  "errors": {
+    "title": ["The title field is required."],
+    "due_date": ["The due date must be a date."]
+  }
+}
+```
+
+---
+
+#### 3️⃣ GET /tasks/{id} - Ambil Detail Tugas
+
+**Request:**
+```http
+GET /api/tasks/1 HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Accept: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "data": {
+    "id": 1,
+    "user_id": 1,
+    "title": "Tugas Algoritma",
+    "description": "Membuat program sorting",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-02-28",
+    "created_at": "2026-02-19T10:30:00Z",
+    "updated_at": "2026-02-19T10:30:00Z"
+  }
+}
+```
+
+**Error Response (404 Not Found):**
+```json
+{
+  "message": "Task not found",
+  "status": 404
+}
+```
+
+---
+
+#### 4️⃣ PUT /tasks/{id} - Update Tugas
+
+**Request:**
+```http
+PUT /api/tasks/1 HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Content-Type: application/json
+Accept: application/json
+```
+
+**Request Body:**
+```json
+{
+  "title": "Tugas Algoritma - Updated",
+  "status": "in_progress",
+  "priority": "medium",
+  "due_date": "2026-03-05"
+}
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "data": {
+    "id": 1,
+    "user_id": 1,
+    "title": "Tugas Algoritma - Updated",
+    "description": "Membuat program sorting",
+    "status": "in_progress",
+    "priority": "medium",
+    "due_date": "2026-03-05",
+    "created_at": "2026-02-19T10:30:00Z",
+    "updated_at": "2026-02-19T14:30:00Z"
+  },
+  "message": "Task updated successfully"
+}
+```
+
+---
+
+#### 5️⃣ DELETE /tasks/{id} - Hapus Tugas
+
+**Request:**
+```http
+DELETE /api/tasks/1 HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Accept: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "Task deleted successfully"
+}
+```
+
+---
+
+#### 6️⃣ GET /user - Ambil Profil User
+
+**Request:**
+```http
+GET /api/user HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Accept: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "profile_photo": null,
+    "email_verified_at": "2026-02-19T10:00:00Z",
+    "google_id": null,
+    "created_at": "2026-02-19T10:00:00Z",
+    "updated_at": "2026-02-19T10:00:00Z"
+  }
+}
+```
+
+---
+
+#### 7️⃣ POST /user/profile-photo - Upload Foto Profil
+
+**Request:**
+```http
+POST /api/user/profile-photo HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer YOUR_TOKEN
+Content-Type: multipart/form-data
+Accept: application/json
+```
+
+**Form Data:**
+| Field | Type | Deskripsi |
+|-------|------|-----------|
+| photo | file | Image file (max 2MB, formats: jpeg, png, jpg) |
+
+**Success Response (200 OK):**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "profile_photo": "profile-photos/user-1.jpg",
+    "email_verified_at": "2026-02-19T10:00:00Z",
+    "created_at": "2026-02-19T10:00:00Z",
+    "updated_at": "2026-02-19T15:00:00Z"
+  },
+  "message": "Profile photo uploaded successfully"
+}
+```
+
+---
+
+### Testing dengan Thunder Client di VS Code
+
+#### Installation & Setup
+
+1. **Install Thunder Client Extension**:
+   - Buka VS Code Extensions
+   - Cari "Thunder Client"
+   - Klik Install
+
+2. **Buka Thunder Client**:
+   - Klik icon Thunder Client di sidebar
+   - Atau tekan `Cmd+Shift+P` dan cari "Thunder Client"
+
+#### Membuat Request
+
+##### 1. GET - Ambil Semua Task
+
+**Thunder Client UI:**
+- **Method**: GET
+- **URL**: `{{baseUrl}}/tasks`
+- **Headers**:
+  ```
+  Authorization: Bearer {{token}}
+  Accept: application/json
+  ```
+
+**Thunder Client Collection (JSON):**
+```json
+{
+  "name": "Task Management API",
+  "requests": [
+    {
+      "name": "Get All Tasks",
+      "method": "GET",
+      "url": "{{baseUrl}}/tasks",
+      "headers": {
+        "Authorization": "Bearer {{token}}",
+        "Accept": "application/json"
+      }
+    }
+  ],
+  "variables": {
+    "baseUrl": "http://localhost:8000/api",
+    "token": "YOUR_TOKEN_HERE"
+  }
+}
+```
+
+##### 2. POST - Buat Task Baru
+
+**Thunder Client UI:**
+- **Method**: POST
+- **URL**: `{{baseUrl}}/tasks`
+- **Headers**:
+  ```
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+  ```
+- **Body (Raw JSON)**:
+  ```json
+  {
+    "title": "Tugas Struktur Data",
+    "description": "Implementasikan Binary Search Tree",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2026-03-10"
+  }
+  ```
+
+##### 3. GET - Ambil Task Tertentu
+
+**Thunder Client UI:**
+- **Method**: GET
+- **URL**: `{{baseUrl}}/tasks/1`
+- **Headers**:
+  ```
+  Authorization: Bearer {{token}}
+  ```
+
+##### 4. PUT - Update Task
+
+**Thunder Client UI:**
+- **Method**: PUT
+- **URL**: `{{baseUrl}}/tasks/1`
+- **Headers**:
+  ```
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+  ```
+- **Body (Raw JSON)**:
+  ```json
+  {
+    "status": "in_progress",
+    "priority": "medium"
+  }
+  ```
+
+##### 5. DELETE - Hapus Task
+
+**Thunder Client UI:**
+- **Method**: DELETE
+- **URL**: `{{baseUrl}}/tasks/1`
+- **Headers**:
+  ```
+  Authorization: Bearer {{token}}
+  ```
+
+---
+
+### cURL Examples
+
+Gunakan ini di terminal untuk testing:
+
+**Get All Tasks:**
+```bash
+curl -X GET http://localhost:8000/api/tasks \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**Create Task:**
 ```bash
 curl -X POST http://localhost:8000/api/tasks \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -412,10 +826,67 @@ curl -X POST http://localhost:8000/api/tasks \
   }'
 ```
 
-**Get Tasks**:
+**Update Task:**
 ```bash
-curl -X GET http://localhost:8000/api/tasks \
+curl -X PUT http://localhost:8000/api/tasks/1 \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "completed"
+  }'
+```
+
+**Delete Task:**
+```bash
+curl -X DELETE http://localhost:8000/api/tasks/1 \
   -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Get User Profile:**
+```bash
+curl -X GET http://localhost:8000/api/user \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+---
+
+### Status Codes & Error Handling
+
+| Code | Meaning | Contoh |
+|------|---------|---------|
+| 200 | OK | Request berhasil |
+| 201 | Created | Resource berhasil dibuat |
+| 204 | No Content | Delete berhasil |
+| 400 | Bad Request | Format request salah |
+| 401 | Unauthorized | Token invalid/expired |
+| 403 | Forbidden | User tidak punya akses |
+| 404 | Not Found | Resource tidak ditemukan |
+| 422 | Unprocessable Entity | Validation error |
+| 429 | Too Many Requests | Rate limit exceeded |
+| 500 | Server Error | Internal server error |
+
+**Error Response Format:**
+```json
+{
+  "message": "Deskripsi error",
+  "errors": {
+    "field": ["Error message untuk field"]
+  }
+}
+```
+
+---
+
+### Response Headers
+
+Setiap response menyertakan headers berguna:
+
+```
+Content-Type: application/json
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 59
+Cache-Control: no-cache, private
 ```
 
 ---
