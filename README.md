@@ -274,7 +274,264 @@ Server akan berjalan di: `http://localhost:8000`
 
 ---
 
-## 📁 Struktur Project
+## � Screenshots & Visual Documentation
+
+> Dokumentasi visual aplikasi dengan screenshot dari halaman utama, dashboard, dan fitur-fitur penting.
+
+### Struktur Folder Screenshots
+
+Screenshot disimpan di folder `docs/screenshots/`:
+
+```
+docs/
+└── screenshots/
+    ├── login-page.png           # Halaman login
+    ├── register-page.png        # Halaman register
+    ├── dashboard-overview.png   # Dashboard utama
+    ├── task-creation.png        # Form pembuatan task
+    ├── task-list.png            # Daftar tasks
+    ├── profile-page.png         # Halaman profil
+    └── responsive-mobile.png    # Tampilan mobile
+```
+
+### Cara Menambahkan Screenshot
+
+1. **Ambil Screenshot**:
+   - Buka aplikasi di `http://localhost:8000`
+   - Ambil screenshot halaman yang ingin didokumentasikan
+   - Ukuran screenshot: minimal 1280x720px untuk kualitas baik
+
+2. **Simpan File**:
+   - Simpan di folder `docs/screenshots/`
+   - Gunakan nama file yang deskriptif (lowercase, kebab-case)
+   - Format: PNG atau JPG
+
+3. **Update README**:
+   - Tambahkan screenshot dengan syntax Markdown:
+   ```markdown
+   ![Deskripsi](/docs/screenshots/filename.png)
+   ```
+
+4. **Commit dan Push**:
+   ```bash
+   git add docs/screenshots/
+   git add README.md
+   git commit -m "docs: add screenshots for [halaman]"
+   git push origin main
+   ```
+
+---
+
+### 🔐 Halaman Login (Login Page)
+
+**Lokasi**: `http://localhost:8000/login`
+
+**Fitur**:
+- Form login dengan email dan password
+- Opsi "Remember Me"
+- Link reset password
+- Link register akun baru
+- **Google OAuth Login** button dengan SSO integration
+- Validasi form real-time
+- Responsive design
+
+**Screenshot**:
+```
+![Login Page](/docs/screenshots/login-page.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/login-page.png`
+
+---
+
+### 📝 Halaman Register (Register Page)
+
+**Lokasi**: `http://localhost:8000/register`
+
+**Fitur**:
+- Form register dengan nama, email, password
+- Password confirmation field
+- Email verification requirement
+- Terms & conditions checkbox
+- Link ke halaman login
+- Form validation feedback
+
+**Screenshot**:
+```
+![Register Page](/docs/screenshots/register-page.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/register-page.png`
+
+---
+
+### 📊 Dashboard Utama (Main Dashboard)
+
+**Lokasi**: `http://localhost:8000/dashboard`
+
+**Fitur**:
+- **Header Section**: Greeting pengguna + current date
+- **Task Statistics Cards**: 
+  - Total tasks
+  - Pending tasks
+  - In Progress tasks
+  - Completed tasks
+- **Quick Stats**: 
+  - Persentase completion
+  - Tasks due soon
+  - Average priority level
+- **Recent Tasks List**: Tabel dengan task-task terbaru
+- **Interactive Elements**: 
+  - Add Task button
+  - Search/Filter functionality
+  - Sort options
+
+**Glassmorphism Design**:
+- Background blur effect
+- Semi-transparent cards (0.7-0.9 opacity)
+- Modern gradient colors
+- Smooth transitions
+
+**Screenshot**:
+```
+![Dashboard Overview](/docs/screenshots/dashboard-overview.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/dashboard-overview.png`
+
+---
+
+### ➕ Task Creation (Form Pembuatan Task)
+
+**Lokasi**: `http://localhost:8000/dashboard` (Modal/Form)
+
+**Input Fields**:
+- **Title**: Input field untuk judul task
+- **Description**: Textarea untuk deskripsi detail
+- **Status**: Dropdown (Pending, In Progress, Completed)
+- **Priority**: Dropdown (Low, Medium, High)
+- **Due Date**: Date picker untuk deadline
+- **Course/Category**: Dropdown untuk kategori mata kuliah
+
+**Buttons**:
+- **Submit**: Buat task baru
+- **Cancel**: Tutup form
+
+**Validasi**:
+- Real-time validation feedback
+- Required field indicators
+- Error messages styling
+
+**Screenshot**:
+```
+![Task Creation Form](/docs/screenshots/task-creation.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/task-creation.png`
+
+---
+
+### 📋 Task List & Management
+
+**Lokasi**: `http://localhost:8000/dashboard`
+
+**Fitur**:
+- **Task Table dengan kolom**:
+  - Checkbox untuk select
+  - Task title
+  - Priority indicator (badge warna)
+  - Status (dengan badge color-coded)
+  - Due date
+  - Action buttons (Edit, Delete)
+
+- **Interaktif Elements**:
+  - Hover effects
+  - Status update dengan dropdown
+  - Delete confirmation modal
+  - Bulk actions (select multiple)
+
+- **Filtering & Sorting**:
+  - Filter by status
+  - Filter by priority
+  - Sort by due date
+  - Search functionality
+
+**Screenshot**:
+```
+![Task List](/docs/screenshots/task-list.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/task-list.png`
+
+---
+
+### 👤 Profile Page (Halaman Profil)
+
+**Lokasi**: `http://localhost:8000/profile`
+
+**Fitur**:
+- **Profile Card**:
+  - Avatar/Profile photo
+  - User name display
+  - Email display
+  - Member since info
+
+- **Edit Profile Section**:
+  - Form untuk update name
+  - Form untuk update email
+  - Form untuk change password
+  - Upload profile photo button
+
+- **Account Settings**:
+  - Delete account option
+  - Session management
+  - Login history (opsional)
+
+**Screenshot**:
+```
+![Profile Page](/docs/screenshots/profile-page.png)
+```
+
+**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/profile-page.png`
+
+---
+
+### 📱 Responsive Mobile View
+
+**Testing Device**: 
+- iPhone 12/13 (375x667px)
+- iPad (768x1024px)
+- Android devices
+
+**Responsive Features**:
+- Hamburger menu untuk mobile
+- Stacked layout untuk small screens
+- Touch-friendly buttons
+- Optimized typography
+- Full-width forms
+
+**Screenshots**:
+```
+![Mobile Dashboard](/docs/screenshots/responsive-mobile.png)
+![Mobile Task List](/docs/screenshots/responsive-mobile-tasks.png)
+```
+
+**Catatan**: Screenshots belum tersedia. Silakan ambil screenshot dari device mobile/emulator.
+
+---
+
+### 🌙 Dark Mode (Jika Diimplementasikan)
+
+**Fitur**: Tema gelap untuk comfort mata pada malam hari
+
+**Screenshots** (jika sudah diimplementasikan):
+```
+![Dark Mode Dashboard](/docs/screenshots/dark-mode-dashboard.png)
+```
+
+---
+
+## �📁 Struktur Project
 
 ```
 manajemen-tugas/
