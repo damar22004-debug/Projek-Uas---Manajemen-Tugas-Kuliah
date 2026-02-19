@@ -21,7 +21,6 @@
 - [Menjalankan Aplikasi](#menjalankan-aplikasi)
 - [Struktur Project](#struktur-project)
 - [API Documentation](#api-documentation)
-- [Testing](#testing)
 - [SDLC & UML](#sdlc--uml)
 - [Kontribusi](#kontribusi)
 - [Lisensi](#lisensi)
@@ -1016,46 +1015,6 @@ Cache-Control: no-cache, private
 
 ---
 
-## ✅ Testing
-
-### Run PHPUnit Tests
-
-```bash
-php artisan test
-```
-
-Atau dengan konfigurasi tertentu:
-
-```bash
-vendor/bin/phpunit
-```
-
-### Test Coverage
-
-```bash
-php artisan test --coverage
-```
-
-### Specific Test Suite
-
-```bash
-# Run Feature tests only
-php artisan test tests/Feature
-
-# Run Unit tests only
-php artisan test tests/Unit
-
-# Run specific test class
-php artisan test tests/Feature/ProfileTest
-```
-
-### Test Status
-
-- ✅ 25 tests passing
-- ✅ 61 assertions
-- ✅ All critical features tested
-
----
 
 ## 📐 SDLC & UML
 
