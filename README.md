@@ -352,16 +352,10 @@ docs/
 - Form register dengan nama, email, password
 - Password confirmation field
 - Email verification requirement
-- Terms & conditions checkbox
 - Link ke halaman login
 - Form validation feedback
 
-**Screenshot**:
-```
 ![Register Page](/docs/screenshots/register-page.png)
-```
-
-**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/register-page.png`
 
 ---
 
@@ -392,12 +386,7 @@ docs/
 - Modern gradient colors
 - Smooth transitions
 
-**Screenshot**:
-```
 ![Dashboard Overview](/docs/screenshots/dashboard-overview.png)
-```
-
-**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/dashboard-overview.png`
 
 ---
 
@@ -422,12 +411,7 @@ docs/
 - Required field indicators
 - Error messages styling
 
-**Screenshot**:
-```
 ![Task Creation Form](/docs/screenshots/task-creation.png)
-```
-
-**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/task-creation.png`
 
 ---
 
@@ -456,12 +440,7 @@ docs/
   - Sort by due date
   - Search functionality
 
-**Screenshot**:
-```
 ![Task List](/docs/screenshots/task-list.png)
-```
-
-**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/task-list.png`
 
 ---
 
@@ -487,49 +466,7 @@ docs/
   - Session management
   - Login history (opsional)
 
-**Screenshot**:
-```
 ![Profile Page](/docs/screenshots/profile-page.png)
-```
-
-**Catatan**: Screenshot belum tersedia. Silakan ambil screenshot dan simpan di `docs/screenshots/profile-page.png`
-
----
-
-### 📱 Responsive Mobile View
-
-**Testing Device**: 
-- iPhone 12/13 (375x667px)
-- iPad (768x1024px)
-- Android devices
-
-**Responsive Features**:
-- Hamburger menu untuk mobile
-- Stacked layout untuk small screens
-- Touch-friendly buttons
-- Optimized typography
-- Full-width forms
-
-**Screenshots**:
-```
-![Mobile Dashboard](/docs/screenshots/responsive-mobile.png)
-![Mobile Task List](/docs/screenshots/responsive-mobile-tasks.png)
-```
-
-**Catatan**: Screenshots belum tersedia. Silakan ambil screenshot dari device mobile/emulator.
-
----
-
-### 🌙 Dark Mode (Jika Diimplementasikan)
-
-**Fitur**: Tema gelap untuk comfort mata pada malam hari
-
-**Screenshots** (jika sudah diimplementasikan):
-```
-![Dark Mode Dashboard](/docs/screenshots/dark-mode-dashboard.png)
-```
-
----
 
 ## �📁 Struktur Project
 
