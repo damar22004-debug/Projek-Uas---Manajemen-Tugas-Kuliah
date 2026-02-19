@@ -1,25 +1,52 @@
-# 📋 Dashboard Manajemen Tugas Kuliah (UAS Edition)
+﻿# 📋 Dashboard Manajemen Tugas Kuliah (UAS Edition)
 
-Aplikasi manajemen tugas berbasis Laravel dengan tampilan Glassmorphism untuk memantau dan mengelola tugas kuliah.
+Dashboard manajemen tugas kuliah berbasis **Laravel** yang dirancang untuk memenuhi persyaratan tugas besar/UAS. Aplikasi ini mengusung desain *Glassmorphism* modern untuk memantau progres akademik secara efisien.
 
-## Fitur Utama
-- Authentication: Register & Login pengguna.
-- Manajemen Tugas (CRUD): Buat, lihat, edit, hapus tugas.
-- Dashboard Analytics: Statistik jumlah tugas berdasarkan status (Belum Mulai, Proses, Selesai).
-- Kalender Interaktif: Lihat tenggat tugas pada kalender.
-- Filter & Pencarian: Filter tugas berdasarkan mata kuliah, tanggal, dan status.
-- Notifikasi/Reminder (sederhana): Pengingat tugas mendekati deadline.
-- UI: Tailwind CSS dengan efek Glassmorphism (backdrop-filter: blur)).
-- Database: MySQL (migrasi & seeder tersedia).
+---
 
-## Struktur Halaman
-- /register, /login — Autentikasi pengguna.
-- /dashboard — Ringkasan statistik dan grafik tugas.
-- /tasks — Daftar tugas, form tambah/edit, filter, dan aksi CRUD.
-- /calendar — Tampilan kalender dengan deadline tugas.
+##  Dokumentasi Project (Progress Report)
 
-## Instalasi (Lokal, Windows)
-1. Clone repo:
+### 1. Deskripsi
+Aplikasi ini adalah platform manajemen tugas (To-Do List) khusus mahasiswa. Dikembangkan menggunakan Framework Laravel untuk memastikan sistem yang stabil, aman, dan mudah dikelola dalam memantau deadline perkuliahan.
+
+### 2. User Story
+- **Sebagai Mahasiswa**, saya ingin menginput tugas berdasarkan mata kuliah agar jadwal belajar lebih terstruktur.
+- **Sebagai Pengguna**, saya ingin melihat visualisasi jumlah tugas (Belum Mulai, Proses, Selesai) agar bisa menentukan prioritas.
+- **Sebagai Pengguna**, saya ingin antarmuka yang responsif agar bisa diakses baik dari laptop maupun smartphone.
+
+### 3. SRS (Software Requirements Specification)
+#### Feature List:
+- **Authentication**: Sistem login & register user.
+- **Task Management (CRUD)**: Create, Read, Update, Delete data tugas.
+- **Dashboard Analytics**: Statistik otomatis jumlah tugas berdasarkan status.
+- **Kalender Interaktif**: Navigator tanggal untuk memantau tenggat waktu.
+- **Glassmorphism UI**: Efek blur dan transparansi menggunakan Tailwind CSS.
+
+### 4. UML (Unified Modeling Language)
+- **Use Case Diagram**: Aktor (Mahasiswa) melakukan interaksi manajemen tugas dan melihat dashboard.
+- **Activity Diagram**: Alur data dari input user -> Controller Laravel -> Database MySQL.
+- **Sequence Diagram**: Urutan proses request dari Router hingga pengembalian View Blade.
+
+### 5. Mock-Up
+Desain mengacu pada konsep visual di `image_01bf23.png`:
+- **Glass-Effect**: Menggunakan `backdrop-filter: blur()` pada sidebar dan kartu.
+- **Color Palette**: Warna pastel untuk indikator status tugas (Biru, Kuning, Hijau, Merah).
+
+---
+
+##  SDLC (Software Development Life Cycle)
+Proyek ini dikembangkan dengan model **Agile**:
+1. **Planning**: Identifikasi fitur dan skema database.
+2. **Design**: Pembuatan mockup UI Glassmorphism.
+3. **Implementation**: Coding backend (Laravel) dan frontend (Tailwind).
+4. **Testing**: Uji coba fungsionalitas fitur CRUD.
+
+---
+
+##  Instalasi Lokal
+
+1. **Clone Repo**:
+   ```bash
    git clone https://github.com/damar22004-debug/Projek-Uas---Manajemen-Tugas-Kuliah.git
 2. Masuk folder project:
    cd manajemen-tugas
@@ -34,28 +61,13 @@ Aplikasi manajemen tugas berbasis Laravel dengan tampilan Glassmorphism untuk me
 7. Konfigurasi database di .env (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
 8. Migrasi dan seeder:
    php artisan migrate --seed
-9. Link storage:
-   php artisan storage:link
-10. Jalankan build asset:
-    npm run dev
-11. Jalankan server:
-    php artisan serve
+   ```
 
-## Testing
-- Jalankan unit/feature tests:
-  php artisan test
+5. **Jalankan server lokal**:
+   ```bash
+   php artisan serve
+   ```
 
-## Environment Variables Penting
-- APP_NAME, APP_URL
-- DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
-- MAIL_* (opsional, untuk notifikasi email)
-
-## Catatan Pengembangan
-- Frontend memakai Tailwind CSS; komponen UI di resources/views dan resources/js.
-- API routes untuk tugas ada di routes/api.php (jika digunakan).
-- Perbarui seeder jika menambahkan sample data baru.
-
-
-
+---
 
 

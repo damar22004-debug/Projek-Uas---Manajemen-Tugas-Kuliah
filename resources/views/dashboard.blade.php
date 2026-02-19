@@ -97,7 +97,7 @@
                             ['BELUM MULAI', $tasks->where('status', 'Belum Mulai')->count(), 'bg-gray-50/60 text-gray-700'],
                             ['SELESAI', $tasks->where('status', 'Selesai')->count(), 'bg-green-100/60 text-green-700'],
                             ['PROSES', $tasks->where('status', 'Proses')->count(), 'bg-amber-100/60 text-amber-700'],
-                            ['TERLAMBAT', $tasks->where('display_status', 'Terlambat')->count(), 'bg-red-100/80 text-red-900']
+                            ['TERLAMBAT', $tasks->filter(fn($t) => $t->status !== 'Selesai' && \Carbon\Carbon::parse($t->deadline)->isPast())->count(), 'bg-red-100/80 text-red-900']
                         ];
                     @endphp
                     @foreach($stats as $s)
@@ -116,36 +116,50 @@
                 </div>
 
                 <div id="task-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pb-10">
-                    @forelse($tasks as $task)
-                        @php
-                            $colors = [
-                                'Belum Mulai' => ['bg' => 'bg-gray-50/60', 'border' => 'border-gray-200/50', 'text' => 'text-gray-600'],
-                                'Terlambat' => ['bg' => 'bg-red-50/60', 'border' => 'border-red-200/50', 'text' => 'text-red-600'],
-                                'Proses'      => ['bg' => 'bg-amber-50/60', 'border' => 'border-amber-200/50', 'text' => 'text-amber-600'],
-                                'Selesai'     => ['bg' => 'bg-green-50/60', 'border' => 'border-green-200/50', 'text' => 'text-green-600']
-                            ][$task->status] ?? ['bg' => 'bg-white/60', 'border' => 'border-white/40', 'text' => 'text-blue-600'];
-                        @endphp
-                        <div class="task-card {{ $colors['bg'] }} {{ $colors['border'] }} backdrop-blur-md rounded-[2rem] border p-6 transition-all hover:shadow-xl hover:-translate-y-1" data-status="{{ $task->status }}">
-                            <div class="flex justify-between items-start mb-6">
-                                <div class="w-10 h-10 bg-white/80 rounded-xl flex items-center justify-center shadow-sm">
-                                    <svg class="w-5 h-5 {{ $colors['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2"/></svg>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button onclick='openEditModal(@json($task))' class="p-2.5 bg-blue-600 text-white rounded-xl hover:scale-110 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2"/></svg></button>
-                                    <button onclick="handleDelete('{{ $task->id }}')" class="p-2.5 bg-white text-red-500 rounded-xl hover:scale-110 transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7" stroke-width="2"/></svg></button>
-                                    <form id="delete-{{ $task->id }}" action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="hidden">@csrf @method('DELETE')</form>
-                                </div>
-                            </div>
-                            <h3 class="text-xl font-black text-slate-800 mb-1">{{ $task->name }}</h3>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">{{ $task->subject }}</p>
-                            <div class="flex items-center justify-between pt-5 border-t border-black/5">
-                                <span class="text-[10px] font-black text-slate-600 italic">{{ \Carbon\Carbon::parse($task->deadline)->format('d M, H:i') }}</span>
-                                <div class="px-3 py-1 bg-white/80 rounded-full text-[9px] font-black uppercase {{ $colors['text'] }}">{{ $task->status }}</div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full py-20 text-center text-slate-400 font-bold italic">Belum ada tugas.</div>
-                    @endforelse
+          @forelse($tasks as $task)
+    @php
+        // 1. Tentukan apakah tugas terlambat (Overdue)
+        $isOverdue = \Carbon\Carbon::parse($task->deadline)->isPast() && $task->status !== 'Selesai';
+        
+        // 2. Tentukan status yang akan ditampilkan
+        $displayStatus = $isOverdue ? 'Terlambat' : $task->status;
+
+        $colors = [
+            'Belum Mulai' => ['bg' => 'bg-gray-50/60', 'border' => 'border-gray-200/50', 'text' => 'text-gray-600'],
+            'Terlambat'   => ['bg' => 'bg-red-50/60',  'border' => 'border-red-200/50',  'text' => 'text-red-600'],
+            'Proses'      => ['bg' => 'bg-amber-50/60', 'border' => 'border-amber-200/50', 'text' => 'text-amber-600'],
+            'Selesai'     => ['bg' => 'bg-green-50/60', 'border' => 'border-green-200/50', 'text' => 'text-green-600']
+        ][$displayStatus] ?? ['bg' => 'bg-white/60', 'border' => 'border-white/40', 'text' => 'text-blue-600'];
+    @endphp
+
+    <div class="task-card {{ $colors['bg'] }} {{ $colors['border'] }} backdrop-blur-md rounded-[2rem] border p-6 transition-all hover:shadow-xl hover:-translate-y-1" data-status="{{ $task->status }}">
+        <div class="flex justify-between items-start mb-6">
+            <div class="w-10 h-10 bg-white/80 rounded-xl flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 {{ $colors['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-width="2"/></svg>
+            </div>
+            <div class="flex gap-2">
+                <button onclick='openEditModal(@json($task))' class="p-2.5 bg-blue-600 text-white rounded-xl hover:scale-110 transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2"/></svg></button>
+                <button onclick="handleDelete('{{ $task->id }}')" class="p-2.5 bg-white text-red-500 rounded-xl hover:scale-110 transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7" stroke-width="2"/></svg></button>
+                <form id="delete-{{ $task->id }}" action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="hidden">@csrf @method('DELETE')</form>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-black text-slate-800 mb-1">{{ $task->name }}</h3>
+        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">{{ $task->subject }}</p>
+
+        <div class="flex items-center justify-between pt-5 border-t border-black/5">
+            <span class="text-[10px] font-black {{ $isOverdue ? 'text-red-600' : 'text-slate-600' }} italic">
+                {{ \Carbon\Carbon::parse($task->deadline)->format('d M, H:i') }}
+            </span>
+
+            <div class="px-3 py-1 bg-white/80 rounded-full text-[9px] font-black uppercase {{ $colors['text'] }}">
+                {{ $isOverdue ? 'TERLAMBAT' : $task->status }}
+            </div>
+        </div>
+    </div>
+@empty
+    <div class="col-span-full py-20 text-center text-slate-400 font-bold italic">Belum ada tugas.</div>
+@endforelse
                 </div>
             </main>
         </div>
