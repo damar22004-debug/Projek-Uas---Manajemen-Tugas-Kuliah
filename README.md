@@ -493,55 +493,335 @@ Proyek ini dikembangkan dengan metodologi **Agile**:
 
 ### UML Diagrams
 
-#### Use Case Diagram
-```
-┌─────────────────────────────┐
-│         Mahasiswa           │
-└──────────────┬──────────────┘
-               │
-    ┌──────────┼──────────────┐
-    │          │              │
-    ▼          ▼              ▼
-┌────────┐ ┌──────┐ ┌────────────┐
-│ Login  │ │ CRUD │ │  View      │
-│ &      │ │Tasks │ │  Dashboard │
-│Register│ │      │ │  Analytics │
-└────────┘ └──────┘ └────────────┘
+#### 1. Use Case Diagram
+Menggambarkan interaksi antara aktor (Mahasiswa) dengan sistem:
+
+```mermaid
+graph TB
+    Actor["👤 Mahasiswa"]
+    
+    UC1["📝 Register & Login"]
+    UC2["🔍 View Dashboard"]
+    UC3["➕ Create Task"]
+    UC4["✏️ Update Task"]
+    UC5["🗑️ Delete Task"]
+    UC6["📊 View Analytics"]
+    UC7["🔐 Manage Profile"]
+    UC8["🔑 Google OAuth"]
+    
+    Actor -->|Use| UC1
+    Actor -->|Use| UC2
+    Actor -->|Use| UC3
+    Actor -->|Use| UC4
+    Actor -->|Use| UC5
+    Actor -->|Use| UC6
+    Actor -->|Use| UC7
+    Actor -->|Use| UC8
+    
+    UC1 -->|includes| UC8
+    UC3 -->|extends| UC2
+    UC4 -->|extends| UC2
+    UC5 -->|extends| UC2
+    UC6 -->|extends| UC2
+    
+    style Actor fill:#e1f5ff
+    style UC1 fill:#fff3e0
+    style UC2 fill:#f3e5f5
+    style UC3 fill:#e8f5e9
+    style UC4 fill:#e8f5e9
+    style UC5 fill:#ffebee
+    style UC6 fill:#fce4ec
+    style UC7 fill:#fff9c4
+    style UC8 fill:#f1f8e9
 ```
 
-#### Entity Relationship Diagram
-```
-Users
-├── id (PK)
-├── name
-├── email (UNIQUE)
-├── password
-├── google_id (UNIQUE, NULL)
-├── profile_photo
-└── email_verified_at
+#### 2. Entity Relationship Diagram (ERD)
+Menunjukkan relasi antar tabel database:
 
-Tasks
-├── id (PK)
-├── user_id (FK)
-├── title
-├── description
-├── status (pending, in_progress, completed)
-├── priority (low, medium, high)
-├── due_date
-├── created_at
-└── updated_at
-
-Assignments
-├── id (PK)
-├── user_id (FK)
-└── task_id (FK)
+```mermaid
+erDiagram
+    USERS ||--o{ TASKS : creates
+    USERS ||--o{ ASSIGNMENTS : has
+    TASKS ||--o{ ASSIGNMENTS : "assigned to"
+    
+    USERS {
+        int id PK
+        string name
+        string email UK
+        string password
+        string google_id UK "nullable"
+        string profile_photo "nullable"
+        timestamp email_verified_at "nullable"
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    TASKS {
+        int id PK
+        int user_id FK
+        string title
+        text description "nullable"
+        enum status "pending|in_progress|completed"
+        enum priority "low|medium|high"
+        date due_date
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    ASSIGNMENTS {
+        int id PK
+        int user_id FK
+        int task_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
 ```
 
-#### Activity Diagram (Task Creation Flow)
+#### 3. Activity Diagram - Task Creation Flow
+Alur proses pembuatan tugas baru:
+
+```mermaid
+graph TD
+    Start([👤 User Membuka Dashboard])
+    ClickAdd["Klik Tombol 'Add Task'"]
+    Form["📝 Form Input Tugas Muncul"]
+    Input["📥 Input Data:<br/>- Title<br/>- Description<br/>- Status<br/>- Priority<br/>- Due Date<br/>- Course Category"]
+    Submit["✅ Submit Form"]
+    Validate{{"🔍 Validasi<br/>Data Valid?"}}
+    Error["❌ Tampilkan Error<br/>Message"]
+    Save["💾 Simpan ke Database"]
+    Update["🔄 Update Dashboard"]
+    Success["✨ Task Berhasil<br/>Ditambahkan"]
+    End([🎉 Selesai])
+    
+    Start --> ClickAdd
+    ClickAdd --> Form
+    Form --> Input
+    Input --> Submit
+    Submit --> Validate
+    Validate -->|No| Error
+    Error --> Form
+    Validate -->|Yes| Save
+    Save --> Update
+    Update --> Success
+    Success --> End
+    
+    style Start fill:#c8e6c9
+    style End fill:#c8e6c9
+    style Error fill:#ffcdd2
+    style Success fill:#a5d6a7
+    style Validate fill:#fff9c4
 ```
-User → Fill Form → Submit → Validate → Save to DB → Update Dashboard
-                                         ↓
-                                    Success ✓
+
+#### 4. Sequence Diagram - Login Process
+Urutan interaksi sistem saat user login:
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Browser
+    participant Laravel as Laravel<br/>Server
+    participant Google as Google<br/>OAuth
+    participant Database as MySQL<br/>Database
+    participant Session as Session<br/>Storage
+    
+    User->>Browser: Buka Login Page
+    Browser->>Laravel: GET /login
+    Laravel-->>Browser: Tampilkan Login Form
+    
+    User->>Browser: Klik 'Login dengan Google'
+    Browser->>Google: Redirect ke Google OAuth
+    Google->>User: Minta Autentikasi
+    User->>Google: Input Credentials
+    Google->>Browser: Redirect ke Callback
+    
+    Browser->>Laravel: GET /auth/google/callback?code=xxx
+    Laravel->>Google: POST Token Request
+    Google-->>Laravel: Return Access Token
+    Laravel->>Google: GET User Info
+    Google-->>Laravel: Return User Data
+    
+    Laravel->>Database: Check User Exists?
+    Database-->>Laravel: User Found
+    
+    Laravel->>Database: Create/Update Session Token
+    Database-->>Laravel: Token Created
+    
+    Laravel->>Session: Store User Session
+    Session-->>Laravel: Session Stored
+    
+    Laravel-->>Browser: Redirect ke Dashboard
+    Browser-->>User: Dashboard Loaded ✅
+```
+
+#### 5. Class Diagram - Application Architecture
+Struktur class dan relationship dalam aplikasi:
+
+```mermaid
+classDiagram
+    class User {
+        -id: int
+        -name: string
+        -email: string
+        -password: string
+        -google_id: string
+        -profile_photo: string
+        +register(): void
+        +login(): void
+        +logout(): void
+        +updateProfile(): void
+        +getTasks(): Collection
+    }
+    
+    class Task {
+        -id: int
+        -user_id: int
+        -title: string
+        -description: string
+        -status: enum
+        -priority: enum
+        -due_date: date
+        +create(): Task
+        +update(): void
+        +delete(): void
+        +getStatus(): string
+    }
+    
+    class Assignment {
+        -id: int
+        -user_id: int
+        -task_id: int
+        +assign(): void
+        +revoke(): void
+    }
+    
+    class TaskController {
+        +index(): View
+        +create(): View
+        +store(): View
+        +edit(): View
+        +update(): View
+        +destroy(): void
+    }
+    
+    class ProfileController {
+        +edit(): View
+        +update(): void
+        +updatePhoto(): void
+        +destroy(): void
+    }
+    
+    class TaskApiController {
+        +index(): JSON
+        +store(): JSON
+        +update(): JSON
+        +destroy(): JSON
+    }
+    
+    User "1" --> "*" Task: creates
+    User "1" --> "*" Assignment: has
+    Task "1" --> "*" Assignment: assigned_to
+    TaskController --> Task: manages
+    ProfileController --> User: manages
+    TaskApiController --> Task: manages
+```
+
+#### 6. State Diagram - Task Status Flow
+Alur perubahan status task:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: Task Created
+    
+    Pending --> InProgress: User Mulai Mengerjakan
+    Pending --> Completed: Direct Complete
+    Pending --> Cancelled: Dibatalkan
+    
+    InProgress --> Completed: Task Selesai
+    InProgress --> Pending: Kembali ke Pending
+    InProgress --> Cancelled: Dibatalkan
+    
+    Completed --> [*]: ✅ Archived
+    Cancelled --> [*]: ❌ Removed
+    
+    note right of Pending
+        Task baru dibuat
+        Deadline belum dimulai
+    end note
+    
+    note right of InProgress
+        User sedang mengerjakan
+        Deadline masih panjang
+    end note
+    
+    note right of Completed
+        Task sudah selesai
+        Dikumpulkan ke dosen
+    end note
+    
+    note right of Cancelled
+        Task dibatalkan
+        Tidak perlu dikerjakan
+    end note
+```
+
+#### 7. System Architecture Diagram
+Arsitektur sistem secara keseluruhan:
+
+```mermaid
+graph TB
+    Client["🖥️ Client<br/>Browser"]
+    
+    WEB["⚡ Vite Build<br/>HTML/CSS/JS"]
+    API["🔌 REST API<br/>Sanctum"]
+    
+    Router["📍 Laravel Router"]
+    Middleware["🔐 Middleware<br/>Auth, Verified"]
+    
+    Controllers["🎯 Controllers<br/>Task, Profile, Socialite"]
+    Models["💾 Models<br/>User, Task"]
+    
+    Services["⚙️ Services<br/>Auth, Email, OAuth"]
+    
+    DB["🗄️ MySQL Database"]
+    Cache["⚡ Redis Cache"]
+    Storage["📁 File Storage"]
+    Email["📧 SMTP Email"]
+    OAuth["🔑 Google OAuth"]
+    
+    Client -->|HTTP/REST| WEB
+    Client -->|API Calls| API
+    
+    WEB --> Router
+    API --> Router
+    
+    Router --> Middleware
+    Middleware --> Controllers
+    
+    Controllers --> Models
+    Controllers --> Services
+    
+    Models --> DB
+    Models --> Cache
+    
+    Services --> DB
+    Services --> Email
+    Services --> OAuth
+    Services --> Storage
+    
+    style Client fill:#e1f5ff
+    style WEB fill:#f3e5f5
+    style API fill:#e8f5e9
+    style Router fill:#fff3e0
+    style Middleware fill:#fce4ec
+    style Controllers fill:#e0f2f1
+    style Models fill:#fff9c4
+    style Services fill:#f1f8e9
+    style DB fill:#c8e6c9
+    style Cache fill:#bbdefb
+    style Storage fill:#ffe0b2
+    style Email fill:#ffccbc
+    style OAuth fill:#d1c4e9
 ```
 
 ---
