@@ -1,22 +1,11 @@
-﻿<div align="center">
+﻿# 📋 Dashboard Manajemen Tugas Kuliah
 
-<h1>✨ Dashboard Manajemen Tugas Kuliah</h1>
+> Platform manajemen tugas (To-Do List) berbasis Laravel dengan desain modern **Glassmorphism** untuk membantu mahasiswa mengelola deadline akademik dengan efisien.
 
-<p style="color: #6b7280; margin-top: 6px;">Aplikasi manajemen tugas modern untuk mahasiswa — bersih, responsif, dan fokus pada produktivitas.</p>
-
-<p>
 ![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat-square&logo=laravel)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat-square&logo=php)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-06B6D4?style=flat-square&logo=tailwind-css)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-</p>
-
-<p>
-<a href="#instalasi"><img alt="Get Started" src="https://img.shields.io/badge/Get%20Started-Instalasi-blue?style=flat-square"></a>
-<a href="#fitur-utama"><img alt="Docs" src="https://img.shields.io/badge/Docs-Fitur-orange?style=flat-square"></a>
-</p>
-
-</div>
 
 ---
 
@@ -32,6 +21,7 @@
 - [Menjalankan Aplikasi](#menjalankan-aplikasi)
 - [Struktur Project](#struktur-project)
 - [API Documentation](#api-documentation)
+- [Testing](#testing)
 - [SDLC & UML](#sdlc--uml)
 - [Kontribusi](#kontribusi)
 - [Lisensi](#lisensi)
@@ -1026,6 +1016,46 @@ Cache-Control: no-cache, private
 
 ---
 
+## ✅ Testing
+
+### Run PHPUnit Tests
+
+```bash
+php artisan test
+```
+
+Atau dengan konfigurasi tertentu:
+
+```bash
+vendor/bin/phpunit
+```
+
+### Test Coverage
+
+```bash
+php artisan test --coverage
+```
+
+### Specific Test Suite
+
+```bash
+# Run Feature tests only
+php artisan test tests/Feature
+
+# Run Unit tests only
+php artisan test tests/Unit
+
+# Run specific test class
+php artisan test tests/Feature/ProfileTest
+```
+
+### Test Status
+
+- ✅ 25 tests passing
+- ✅ 61 assertions
+- ✅ All critical features tested
+
+---
 
 ## 📐 SDLC & UML
 
