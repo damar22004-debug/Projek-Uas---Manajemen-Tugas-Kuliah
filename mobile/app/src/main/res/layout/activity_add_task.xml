@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambah Tugas Baru"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/et_task_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Tugas (Misal: Matkul AI)"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/et_task_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Deskripsi (Misal: Kerjain modul 3)"
+        android:gravity="top"
+        android:lines="3"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btn_save_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan Tugas" />
+
+</LinearLayout>
