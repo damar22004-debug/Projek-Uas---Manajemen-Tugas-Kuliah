@@ -14,6 +14,7 @@
 
 - [Deskripsi](#deskripsi)
 - [Fitur Utama](#fitur-utama)
+- [User Flow & Flowcharts](#user-flow--flowcharts)
 - [Arsitektur Sistem](#arsitektur-sistem)
 - [Tech Stack](#tech-stack)
 - [Struktur Project](#struktur-project)
@@ -69,6 +70,219 @@
 - ✅ Responsive Layout (Mobile & Desktop)
 - ✅ Dark Mode Support
 - ✅ Material Design 3 (Mobile)
+
+---
+
+## 📊 User Flow & Flowcharts
+
+### 1. Authentication Flow (Login/Register)
+
+```mermaid
+flowchart TD
+    A[🌐 User Launch App] --> B{Already Logged In?}
+    B -->|Yes| C[✅ Go to Dashboard]
+    B -->|No| D{Choose Login Method}
+    
+    D -->|Email/Password| E[📝 Input Email & Password]
+    D -->|Google OAuth| F[🔑 Google Sign-In]
+    
+    E --> G{Validate Credentials}
+    F --> G
+    
+    G -->|Invalid| H[❌ Show Error]
+    H --> E
+    
+    G -->|Valid| I[💾 Save JWT Token]
+    I --> J[✅ Redirect to Dashboard]
+    
+    style A fill:#e1f5e1
+    style C fill:#e1f5e1
+    style J fill:#e1f5e1
+    style H fill:#ffe1e1
+```
+
+### 2. Task Management Flow
+
+```mermaid
+flowchart TD
+    A[📋 Task List Screen] --> B{User Action?}
+    
+    B -->|View Tasks| C[📊 Fetch from Server]
+    B -->|Create New| D[➕ Create Task Form]
+    B -->|Edit| E[✏️ Edit Task Form]
+    B -->|Delete| F[🗑️ Confirm Delete]
+    
+    C --> G[💾 Store in Local DB]
+    G --> H[📱 Display Task List]
+    
+    D --> I[📝 Fill Task Details]
+    I --> J[name, subject, deadline, priority...]
+    J --> K{Validate}
+    K -->|Invalid| L[❌ Show Error]
+    L --> I
+    K -->|Valid| M[📤 POST to Server]
+    
+    E --> N[📝 Update Fields]
+    N --> O{Validate}
+    O -->|Invalid| P[❌ Show Error]
+    P --> N
+    O -->|Valid| Q[📤 PUT to Server]
+    
+    F --> R{Confirm?}
+    R -->|No| A
+    R -->|Yes| S[🗑️ DELETE from Server]
+    
+    M --> T[✅ Success]
+    Q --> T
+    S --> T
+    T --> U[🔄 Refresh Task List]
+    U --> H
+    
+    style H fill:#e1f5e1
+    style L fill:#ffe1e1
+    style P fill:#ffe1e1
+    style T fill:#e1f5e1
+```
+
+### 3. Dashboard & Analytics Flow
+
+```mermaid
+flowchart TD
+    A[📊 Dashboard Screen] --> B[⏳ Loading...]
+    
+    B --> C[📥 Fetch Statistics]
+    C --> D[Count Tasks by Status]
+    D --> E[Count by Priority]
+    E --> F[Upcoming Deadlines]
+    
+    G[💾 Local Cache] -.->|Optional| H[📱 Display Offline Data]
+    
+    F --> I[📈 Generate Charts]
+    I --> J[📊 Show Analytics Dashboard]
+    
+    J --> K{Display Components}
+    K -->|Stats cards| L[Total: X, In Progress: Y, Completed: Z]
+    K -->|Pie Chart| M[Status Distribution]
+    K -->|Bar Chart| N[Priority Breakdown]
+    K -->|List| O[⏰ Next 5 Deadlines]
+    
+    L --> P[✅ Dashboard Ready]
+    M --> P
+    N --> P
+    O --> P
+    
+    P --> Q{User Action?}
+    Q -->|Refresh| C
+    Q -->|View Task| R[Navigate to Task Detail]
+    Q -->|Create Task| S[Open Create Task Form]
+    
+    style P fill:#e1f5e1
+    style R fill:#e1b5f5
+    style S fill:#e1b5f5
+```
+
+### 4. Complete User Journey (End-to-End)
+
+```mermaid
+flowchart TD
+    Start([👤 User Opens App]) --> Login{Logged In?}
+    
+    Login -->|No| SignIn[🔐 Sign In / Register]
+    SignIn --> SignInForm[📝 Enter Credentials]
+    SignInForm --> AuthValidate{Valid?}
+    AuthValidate -->|No| SignInForm
+    AuthValidate -->|Yes| SaveToken[💾 Save Token]
+    SaveToken --> Dashboard
+    
+    Login -->|Yes| Dashboard[📊 Dashboard Screen]
+    
+    Dashboard --> UserChoice{What Would User Do?}
+    
+    UserChoice -->|View All Tasks| ViewTasks[📋 Show Task List]
+    UserChoice -->|Create Task| CreateTask[➕ New Task Form]
+    UserChoice -->|View Analytics| ViewAnalytics[📈 Show Analytics]
+    UserChoice -->|Manage Profile| ViewProfile[👤 Profile Settings]
+    
+    ViewTasks --> TaskDetail{Select Task?}
+    TaskDetail -->|View| TaskDetailScreen[🔍 Task Details]
+    TaskDetail -->|Edit| EditTask[✏️ Edit Form]
+    TaskDetail -->|Delete| ConfirmDelete[🗑️ Confirm]
+    TaskDetail -->|Back| Dashboard
+    
+    CreateTask --> FormFill[📝 Fill Form Fields]
+    FormFill --> FormValidate{Valid?}
+    FormValidate -->|No| FormError[❌ Error]
+    FormError --> FormFill
+    FormValidate -->|Yes| SaveTask[💾 Save to DB]
+    SaveTask --> TaskSuccess[✅ Created]
+    TaskSuccess --> Dashboard
+    
+    EditTask --> EditFill[✏️ Modify Details]
+    EditFill --> EditValidate{Valid?}
+    EditValidate -->|No| EditError[❌ Error]
+    EditError --> EditFill
+    EditValidate -->|Yes| UpdateTask[🔄 Update DB]
+    UpdateTask --> UpdateSuccess[✅ Updated]
+    UpdateSuccess --> Dashboard
+    
+    ConfirmDelete --> DeleteConfirm{Really Delete?}
+    DeleteConfirm -->|No| TaskDetail
+    DeleteConfirm -->|Yes| DeleteTask[🗑️ Remove from DB]
+    DeleteTask --> DeleteSuccess[✅ Deleted]
+    DeleteSuccess --> Dashboard
+    
+    TaskDetailScreen --> TaskAction{Any Action?}
+    TaskAction -->|Mark Complete| MarkComplete[✔️ Update Status]
+    TaskAction -->|Back| Dashboard
+    MarkComplete --> Dashboard
+    
+    ViewAnalytics --> Analytics[📊 Show Statistics]
+    Analytics --> Dashboard
+    
+    ViewProfile --> Profile[👤 Profile Page]
+    Profile --> ProfileChoice{Update?}
+    ProfileChoice -->|No| Dashboard
+    ProfileChoice -->|Yes| UpdateProfile[✏️ Edit Profile]
+    UpdateProfile --> ProfileSave[💾 Save Changes]
+    ProfileSave --> Dashboard
+    
+    Dashboard --> Logout{Logout?}
+    Logout -->|Yes| LogoutConfirm[🔐 Confirm Logout]
+    LogoutConfirm --> ClearToken[🗑️ Clear Token]
+    ClearToken --> Login
+    Logout -->|No| UserChoice
+    
+    style Dashboard fill:#e1f5e1,stroke:#4caf50,stroke-width:3px
+    style Start fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    style TaskSuccess fill:#e1f5e1
+    style UpdateSuccess fill:#e1f5e1
+    style DeleteSuccess fill:#e1f5e1
+    style FormError fill:#ffe1e1
+    style EditError fill:#ffe1e1
+    style AuthValidate fill:#fff9c4
+```
+
+### 5. Data Synchronization Flow (Web ↔ Mobile)
+
+```mermaid
+flowchart LR
+    A[📱 Mobile App] -->|1. POST/PUT/DELETE| B[🌐 Web Server]
+    B -->|2. Validate & Process| C[💾 MySQL Database]
+    C -->|3. Confirmation| B
+    B -->|4. Response JSON| A
+    A -->|5. Update Local Cache| D[📦 Room Database]
+    D -->|6. Refresh UI| E[📊 Update Display]
+    
+    F[⏳ Offline Mode] -->|Pending Queue| A
+    A -->|When Online| B
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e9
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#ffebee
+```
 
 ---
 

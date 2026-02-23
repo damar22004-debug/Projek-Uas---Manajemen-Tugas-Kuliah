@@ -14,6 +14,7 @@
 
 - [Deskripsi](#deskripsi)
 - [Fitur](#fitur)
+- [Mobile App Flowcharts](#mobile-app-flowcharts)
 - [Tech Stack](#tech-stack)
 - [Struktur Project](#struktur-project)
 - [Setup Development](#setup-development)
@@ -77,7 +78,269 @@
 
 ---
 
-## 🛠 Tech Stack
+## � Mobile App Flowcharts
+
+### 1. Authentication Flow (Mobile)
+
+```mermaid
+flowchart TD
+    A[🚀 Launch App] --> B{Token Exists?}
+    B -->|Yes| C[✅ Check Token Validity]
+    B -->|No| D[📱 Show Login Screen]
+    
+    C -->|Valid| E[✅ Go to Dashboard]
+    C -->|Expired| D
+    
+    D --> F{Login Method?}
+    F -->|Email/Password| G[📝 Email Login Form]
+    
+    G --> H[Input Email & Password]
+    H --> I[POST /api/auth/login]
+    
+    I --> J{Valid?}
+    J -->|No| K[❌ Show Error Toast]
+    K --> H
+    J -->|Yes| L[💾 Save Token to DataStore]
+    
+    L --> M[📦 Cache User Data - Room DB]
+    M --> E
+    
+    style E fill:#e1f5e1
+    style K fill:#ffe1e1
+    style L fill:#e3f2fd
+```
+
+### 2. Mobile Task Management Flow
+
+```mermaid
+flowchart TD
+    A[📋 Task List Screen] --> B[⏳ Load Tasks]
+    
+    B -->|Network Available| C[📥 Fetch from API]
+    B -->|Offline| D[📦 Load from Room DB]
+    
+    C --> E[Store in Room DB]
+    D --> E
+    E --> F[📱 Display Task List]
+    
+    F --> G{User Taps?}
+    G -->|View| H[🔍 Show Task Details]
+    G -->|Edit| I[✏️ Edit Task Screen]
+    G -->|Delete| J[🗑️ Delete Confirmation]
+    G -->|Create| K[➕ Create Task Screen]
+    
+    H --> H1{Has Changes?}
+    H1 -->|No| F
+    
+    I --> I1[📝 Update Fields]
+    I1 --> I2[💾 Save Locally First]
+    I2 --> I3{Online?}
+    I3 -->|Yes| I4[📤 PUT /api/tasks/:id]
+    I3 -->|No| I5[⏳ Queue for Sync]
+    I4 --> I6[✅ Sync Success]
+    I5 --> I6
+    I6 --> F
+    
+    J --> J1{Confirm?}
+    J1 -->|No| F
+    J1 -->|Yes| J2[❌ DELETE /api/tasks/:id]
+    J2 --> J3{Online?}
+    J3 -->|Yes,Success| J4[✅ Deleted]
+    J3 -->|No| J5[⏳ Queue Delete]
+    J4 --> F
+    J5 --> F
+    
+    K --> K1[📝 Fill Task Form]
+    K1 --> K2[name, subject, deadline...]
+    K2 --> K3[💾 Save to Draft]
+    K3 --> K4{Submit?}
+    K4 -->|No| F
+    K4 -->|Yes| K5{Online?}
+    K5 -->|Yes| K6[📤 POST /api/tasks]
+    K5 -->|No| K7[⏳ Queue Creation]
+    K6 --> K8[✅ Created]
+    K7 --> K8
+    K8 --> F
+    
+    style F fill:#e1f5e1
+    style K8 fill:#e1f5e1
+    style I6 fill:#e1f5e1
+    style J4 fill:#e1f5e1
+```
+
+### 3. Background Sync & Notifications
+
+```mermaid
+flowchart TD
+    A[📱 App Running] --> B{Network Status?}
+    
+    B -->|Online| C[🔄 Check Pending Queue]
+    B -->|Offline| D[📴 Offline Mode]
+    
+    D --> D1[Use Local Data Only]
+    D1 --> D2[Queue Changes Locally]
+    D2 --> A
+    
+    C --> E{Pending Items?}
+    E -->|No| F[✅ All Synced]
+    F --> A
+    
+    E -->|Yes| G[📤 Sync Pending Changes]
+    G --> H[Start Background Worker]
+    
+    H --> I{Item Type?}
+    I -->|Create| J[POST Request]
+    I -->|Update| K[PUT Request]
+    I -->|Delete| L[DELETE Request]
+    
+    J --> M{Success?}
+    K --> M
+    L --> M
+    
+    M -->|Yes| N[✅ Remove from Queue]
+    M -->|No| O[❌ Retry Later]
+    
+    N --> P[Update Room DB]
+    O --> Q[Keep in Queue]
+    
+    P --> R[Check for More Items]
+    Q --> R
+    R --> E
+    
+    style F fill:#e1f5e1
+    style N fill:#e1f5e1
+    style O fill:#fff9c4
+```
+
+### 4. Offline Mode Strategy
+
+```mermaid
+flowchart TD
+    A[📱 Mobile App] --> B{Network Connected?}
+    
+    B -->|Yes| C[🟢 Online Mode]
+    B -->|No| D[🔴 Offline Mode]
+    
+    C -->|Read| C1[Fetch Latest from API]
+    C -->|Create/Edit/Delete| C2[Send to Server Immediately]
+    C2 --> C3[Update Local Cache]
+    C3 --> C4[UI Updated]
+    
+    D -->|Read| D1[Load from Room DB]
+    D1 --> D2[Show Cached Data]
+    
+    D -->|Create/Edit/Delete| D3[Save to Local DB]
+    D3 --> D4[Queue Operation]
+    D4 --> D5[Show Toast 'Pending Sync']
+    
+    C1 --> C3
+    
+    E[📡 Network Restored] --> F[Start Sync Process]
+    F --> G[Send Queued Operations]
+    G --> H[Merge Results]
+    H --> I[✅ Sync Complete]
+    I --> C
+    
+    style C fill:#c8e6c9
+    style D fill:#ffccbc
+    style I fill:#e1f5e1
+```
+
+### 5. Complete Mobile Navigation Flow
+
+```mermaid
+flowchart TD
+    Start([Launch App]) --> AuthCheck{Authenticated?}
+    
+    AuthCheck -->|No| Login[🔐 Login Screen]
+    AuthCheck -->|Yes| Main[📱 Main Navigation]
+    
+    Login --> LoginForm[📝 Email/Password Form]
+    LoginForm --> AuthAPI[🌐 API Call]
+    AuthAPI --> AuthSave[💾 Save Token]
+    AuthSave --> Main
+    
+    Main --> NAV{Bottom Navigation}
+    
+    NAV -->|Home| Dashboard[📊 Dashboard Screen]
+    NAV -->|Tasks| TaskList[📋 Task List Screen]
+    NAV -->|Profile| Profile[👤 Profile Screen]
+    
+    Dashboard --> DFlow[Show Statistics]
+    DFlow --> DAction{Action?}
+    DAction -->|Create Task| TaskList
+    DAction -->|View All| TaskList
+    DAction -->|Refresh| Dashboard
+    DAction -->|Profile| Profile
+    
+    TaskList --> TFlow[Show Task List]
+    TFlow --> TAction{Action?}
+    TAction -->|View Detail| TaskDetail[🔍 Task Detail Screen]
+    TAction -->|Create| CreateTask[➕ Create Task Screen]
+    TAction -->|Edit| EditTask[✏️ Edit Task Screen]
+    TAction -->|Delete| ConfirmDelete[🗑️ Confirm Delete]
+    TAction -->|Back| Main
+    
+    TaskDetail --> TDAction{Action?}
+    TDAction -->|Edit| EditTask
+    TDAction -->|Delete| ConfirmDelete
+    TDAction -->|Mark Done| UpdateStatus[✔️ Update Status]
+    TDAction -->|Back| TaskList
+    UpdateStatus --> TaskList
+    
+    CreateTask --> CFlow[📝 Fill Form]
+    CFlow --> CSubmit{Submit?}
+    CSubmit -->|Cancel| TaskList
+    CSubmit -->|Save| CreateAPI[📤 POST Task]
+    CreateAPI --> CreateResult[✅ Created Successfully]
+    CreateResult --> TaskList
+    
+    EditTask --> EFlow[📝 Edit Form]
+    EFlow --> ESubmit{Submit?}
+    ESubmit -->|Cancel| TaskDetail
+    ESubmit -->|Save| EditAPI[📤 PUT Task]
+    EditAPI --> EditResult[✅ Updated Successfully]
+    EditResult --> TaskList
+    
+    ConfirmDelete --> DelCheck{Really Delete?}
+    DelCheck -->|No| TaskDetail
+    DelCheck -->|Yes| DeleteAPI[🗑️ DELETE Task]
+    DeleteAPI --> DeleteResult[✅ Deleted Successfully]
+    DeleteResult --> TaskList
+    
+    Profile --> PFlow[👤 Show User Info]
+    PFlow --> PAction{Action?}
+    PAction -->|Edit Profile| EditProfile[✏️ Edit Profile]
+    PAction -->|Change Password| ChangePassword[🔑 Change Password]
+    PAction -->|Logout| LogoutConfirm[🔐 Confirm Logout]
+    PAction -->|Back| Main
+    
+    EditProfile --> PEditForm[📝 Edit Form]
+    PEditForm --> PSave[💾 Save Changes]
+    PSave --> Profile
+    
+    ChangePassword --> PassForm[🔑 Enter Passwords]
+    PassForm --> PassAPI[📤 Update Password]
+    PassAPI --> PassResult[✅ Password Changed]
+    PassResult --> Profile
+    
+    LogoutConfirm --> LogoutOk{Confirm?}
+    LogoutOk -->|No| Profile
+    LogoutOk -->|Yes| ClearToken[🗑️ Clear Token]
+    ClearToken --> Login
+    
+    style Dashboard fill:#e1f5e1
+    style TaskList fill:#e1f5e1
+    style Profile fill:#e1f5e1
+    style Main fill:#e1f5e1,stroke:#4caf50,stroke-width:2px
+    style CreateResult fill:#c8e6c9
+    style EditResult fill:#c8e6c9
+    style DeleteResult fill:#c8e6c9
+```
+
+---
+
+## �🛠 Tech Stack
 
 ### Core Technologies
 | Component | Library | Version |
