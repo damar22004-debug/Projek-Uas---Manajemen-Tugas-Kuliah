@@ -16,6 +16,7 @@
 - [Tech Stack](#tech-stack)
 - [User Story](#user-story)
 - [Kebutuhan Sistem](#kebutuhan-sistem)
+- [Screenshots](#screenshots)
 - [Instalasi](#instalasi)
 - [Konfigurasi](#konfigurasi)
 - [Menjalankan Aplikasi](#menjalankan-aplikasi)
@@ -145,7 +146,121 @@ Dikembangkan sebagai proyek UAS (Ujian Akhir Semester) menggunakan teknologi mod
 
 ---
 
-## 🚀 Instalasi
+## � Screenshots
+
+### 🎨 Galeri Aplikasi
+
+Berikut adalah preview dari fitur-fitur utama Dashboard Manajemen Tugas Kuliah:
+
+#### 1. Halaman Dashboard Utama
+Dashboard menampilkan statistik tugas, task terbaru, dan overview akademik dengan design glassmorphism yang modern.
+
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+
+**Fitur yang ditampilkan:**
+- Statistik jumlah task (pending, in progress, completed)
+- Greeting personalized untuk pengguna
+- Visualisasi progress akademik
+- List task terbaru dengan status
+- Quick action buttons
+
+---
+
+#### 2. Halaman Login
+Halaman autentikasi dengan opsi login standar atau menggunakan Google OAuth untuk kemudahan akses.
+
+![Login Page](docs/screenshots/login-page.png)
+
+**Fitur yang tersedia:**
+- Form login email/password
+- Opsi "Remember Me"
+- Link forgot password
+- Tombol "Login dengan Google"
+- Link ke halaman register
+
+---
+
+#### 3. Halaman Register
+Halaman pendaftaran untuk pengguna baru dengan validasi form dan email verification.
+
+![Register Page](docs/screenshots/register-page.png)
+
+**Fitur pendaftaran:**
+- Input field nama lengkap
+- Input field email
+- Input field password
+- Password confirmation
+- Validasi form real-time
+- Link ke halaman login
+
+---
+
+#### 4. Form Pembuatan Task
+Modal/form interaktif untuk membuat task baru dengan berbagai opsi dan kategori.
+
+![Task Creation Form](docs/screenshots/task-creation.png)
+
+**Input fields tersedia:**
+- **Judul Task** - nama/judul tugas
+- **Deskripsi** - detail tugas (optional)
+- **Mata Kuliah** - kategori course
+- **Status** - Pending / In Progress / Completed
+- **Priority** - Low / Medium / High
+- **Deadline** - date picker untuk tanggal pengumpulan
+
+---
+
+#### 5. Daftar Task & Management
+Tabel interaktif menampilkan semua task dengan fitur filter, sort, dan action buttons untuk edit/delete.
+
+![Task List](docs/screenshots/task-list.png)
+
+**Fitur manajemen task:**
+- Tabel dengan kolom: Title, Course, Priority, Status, Due Date
+- Color-coded badges untuk status dan priority
+- Checkbox untuk bulk selection
+- Action buttons: Edit, Delete per task
+- Filter by status, priority, atau course
+- Search functionality
+- Sort by due date atau priority
+
+---
+
+#### 6. Halaman Profil Pengguna
+Halaman profil untuk mengelola informasi pengguna dan pengaturan akun.
+
+![Profile Page](docs/screenshots/profile-page.png)
+
+**Fitur profil:**
+- Avatar/Profile photo display
+- Info pengguna (nama, email, member since)
+- Form edit profil (nama, email)
+- Upload profile photo
+- Change password form
+- Session management
+- Delete account option
+
+---
+
+### 🎯 Key Visual Elements
+
+**Design Components:**
+- ✅ **Glassmorphism Effects** - Blur background dengan semi-transparent cards
+- ✅ **Color-Coded Status Badges** - Visual indicators untuk status task
+- ✅ **Responsive Layout** - Optimal display di mobile, tablet, desktop
+- ✅ **Interactive Elements** - Smooth transitions dan hover effects
+- ✅ **Icons & Typography** - Cleaner UI dengan hero icons
+
+**User Experience:**
+- ✅ Glassmorphic cards dengan 70-90% opacity
+- ✅ Smooth gradient backgrounds
+- ✅ Loading states dan animations
+- ✅ Form validation feedback
+- ✅ Success/Error toast notifications
+
+---
+
+## �🚀 Instalasi
 
 ### 1. Clone Repository
 
@@ -275,129 +390,15 @@ Server akan berjalan di: `http://localhost:8000`
 ---
 
 
-### 📝 Halaman Register (Register Page)
 
-**Lokasi**: `http://localhost:8000/register`
 
-**Fitur**:
-- Form register dengan nama, email, password
-- Password confirmation field
-- Email verification requirement
-- Link ke halaman login
-- Form validation feedback
 
-![Register Page](/docs/screenshots/register-page.png)
 
----
 
-### 📊 Dashboard Utama (Main Dashboard)
 
-**Lokasi**: `http://localhost:8000/dashboard`
 
-**Fitur**:
-- **Header Section**: Greeting pengguna + current date
-- **Task Statistics Cards**: 
-  - Total tasks
-  - Pending tasks
-  - In Progress tasks
-  - Completed tasks
-- **Quick Stats**: 
-  - Persentase completion
-  - Tasks due soon
-  - Average priority level
-- **Recent Tasks List**: Tabel dengan task-task terbaru
-- **Interactive Elements**: 
-  - Add Task button
-  - Search/Filter functionality
-  - Sort options
 
-**Glassmorphism Design**:
-- Background blur effect
-- Semi-transparent cards (0.7-0.9 opacity)
-- Modern gradient colors
-- Smooth transitions
 
-![Dashboard Overview](/docs/screenshots/dashboard-overview.png)
-
----
-
-### ➕ Task Creation (Form Pembuatan Task)
-
-**Lokasi**: `http://localhost:8000/dashboard` (Modal/Form)
-
-**Input Fields**:
-- **Title**: Input field untuk judul task
-- **Description**: Textarea untuk deskripsi detail
-- **Status**: Dropdown (Pending, In Progress, Completed)
-- **Priority**: Dropdown (Low, Medium, High)
-- **Due Date**: Date picker untuk deadline
-- **Course/Category**: Dropdown untuk kategori mata kuliah
-
-**Buttons**:
-- **Submit**: Buat task baru
-- **Cancel**: Tutup form
-
-**Validasi**:
-- Real-time validation feedback
-- Required field indicators
-- Error messages styling
-
-![Task Creation Form](/docs/screenshots/task-creation.png)
-
----
-
-### 📋 Task List & Management
-
-**Lokasi**: `http://localhost:8000/dashboard`
-
-**Fitur**:
-- **Task Table dengan kolom**:
-  - Checkbox untuk select
-  - Task title
-  - Priority indicator (badge warna)
-  - Status (dengan badge color-coded)
-  - Due date
-  - Action buttons (Edit, Delete)
-
-- **Interaktif Elements**:
-  - Hover effects
-  - Status update dengan dropdown
-  - Delete confirmation modal
-  - Bulk actions (select multiple)
-
-- **Filtering & Sorting**:
-  - Filter by status
-  - Filter by priority
-  - Sort by due date
-  - Search functionality
-
-![Task List](/docs/screenshots/task-list.png)
-
----
-
-### 👤 Profile Page (Halaman Profil)
-
-**Lokasi**: `http://localhost:8000/profile`
-
-**Fitur**:
-- **Profile Card**:
-  - Avatar/Profile photo
-  - User name display
-  - Email display
-  - Member since info
-
-- **Edit Profile Section**:
-  - Form untuk update name
-  - Form untuk update email
-  - Form untuk change password
-  - Upload profile photo button
-
-- **Account Settings**:
-  - Delete account option
-  - Session management
-  - Login history (opsional)
-
-![Profile Page](/docs/screenshots/profile-page.png)
 
 ## �📁 Struktur Project
 
