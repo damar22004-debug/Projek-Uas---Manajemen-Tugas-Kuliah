@@ -33,10 +33,10 @@ Backend utama yang dibangun menggunakan **Laravel**. Berfungsi sebagai penyedia 
 - **Tech Stack**: PHP (Laravel), Tailwind CSS, Vite, MySQL.
 - **Fitur**: Manajemen user, dashboard statistik, REST API endpoints, autentikasi sanctum.
 
-### ### 2. [Mobile Application](./mobile)
+### 2. [Mobile Application](./mobile)
 Aplikasi Android native yang dirancang untuk akses cepat saat bepergian.
 - **Tech Stack**: Java, Retrofit 2, Material Design 3.
-- **Fitur**: UI Modern (Glassmorphism), Sinkronisasi Real-time, Push Notifications (rencana), Offline Caching (rencana).
+- **Fitur**: UI Modern (Glassmorphism), Sinkronisasi Real-time.
 
 ---
 
@@ -67,6 +67,58 @@ graph LR
     User --> UC3
     User --> UC4
     User --> UC5
+```
+
+---
+
+##  UML Diagrams
+Untuk memberikan gambaran yang lebih teknis, berikut adalah beberapa diagram UML yang merepresentasikan struktur dan alur sistem.
+
+### 1. Class Diagram
+Diagram ini menunjukkan entitas utama dalam sistem (`User` dan `Task`) beserta atribut dan relasinya.
+
+```mermaid
+classDiagram
+    class User {
+        +Integer id
+        +String name
+        +String email
+        +String password
+    }
+    class Task {
+        +Integer id
+        +Integer userId
+        +String title
+        +String description
+        +Date dueDate
+        +String status
+    }
+
+    User "1" -- "0..*" Task : has
+```
+
+### 2. Sequence Diagram (Proses Login)
+Diagram ini menjelaskan langkah-langkah yang terjadi saat pengguna melakukan login, mulai dari client hingga database.
+
+```mermaid
+sequenceDiagram
+    participant Client as Mobile/Web App
+    participant Server as Laravel API
+    participant DB as Database
+
+    Client->>Server: POST /api/login (email, password)
+    Server->>Server: Validate request
+    Server->>DB: SELECT * FROM users WHERE email = ?
+    DB-->>Server: Return user data
+    Server->>Server: Verify password
+    alt Credentials Correct
+        Server->>Server: Generate Sanctum Token
+        Server-->>Client: 200 OK (token, user)
+    else Credentials Incorrect
+        Server-->>Client: 401 Unauthorized
+    end
+    Client->>Client: Store token
+    Client->>Client: Navigate to Main Screen
 ```
 
 ---
