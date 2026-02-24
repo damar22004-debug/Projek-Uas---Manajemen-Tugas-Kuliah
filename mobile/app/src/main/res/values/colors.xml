@@ -3,25 +3,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Tailwind-like Colors -->
-    <color name="primaryColor">#6366F1</color> <!-- Indigo 500 -->
-    <color name="primaryDark">#4F46E5</color> <!-- Indigo 600 -->
-    <color name="backgroundColor">#F8FAFC</color> <!-- Slate 50 -->
+    <color name="primaryColor">#6366F1</color>
+    <color name="primaryDark">#4F46E5</color>
+    <color name="backgroundColor">#F8FAFC</color>
 
-    <!-- Status Colors -->
-    <color name="status_pending">#F59E0B</color> <!-- Amber 500 -->
-    <color name="status_completed">#10B981</color> <!-- Emerald 500 -->
-    <color name="status_overdue">#EF4444</color> <!-- Red 500 -->
+    <color name="status_pending">#F59E0B</color>
+    <color name="status_completed">#10B981</color>
+    <color name="status_overdue">#EF4444</color>
 
-    <!-- Card Backgrounds -->
-    <color name="card_total">#EEF2FF</color> <!-- Indigo 50 -->
-    <color name="card_pending">#FFFBEB</color> <!-- Amber 50 -->
-    <color name="card_completed">#ECFDF5</color> <!-- Emerald 50 -->
+    <color name="card_total">#EEF2FF</color>
+    <color name="card_pending">#FFFBEB</color>
+    <color name="card_completed">#ECFDF5</color>
 
-    <!-- Text Colors -->
-    <color name="text_primary">#1E293B</color> <!-- Slate 800 -->
-    <color name="text_secondary">#64748B</color> <!-- Slate 500 -->
-
+    <color name="text_primary">#1E293B</color>
+    <color name="text_secondary">#64748B</color>
     <color name="textColorPrimary">#1E293B</color>
     <color name="textColorSecondary">#64748B</color>
 </resources>
