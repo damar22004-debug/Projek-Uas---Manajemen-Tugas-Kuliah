@@ -33,7 +33,7 @@ Backend utama yang dibangun menggunakan **Laravel**. Berfungsi sebagai penyedia 
 - **Tech Stack**: PHP (Laravel), Tailwind CSS, Vite, MySQL.
 - **Fitur**: Manajemen user, dashboard statistik, REST API endpoints, autentikasi sanctum.
 
-### 2. [Mobile Application](./mobile)
+### ### 2. [Mobile Application](./mobile)
 Aplikasi Android native yang dirancang untuk akses cepat saat bepergian.
 - **Tech Stack**: Java, Retrofit 2, Material Design 3.
 - **Fitur**: UI Modern (Glassmorphism), Sinkronisasi Real-time, Push Notifications (rencana), Offline Caching (rencana).
