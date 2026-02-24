@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    // Gue hapus baris id("org.jetbrains.kotlin.android") yang bikin bentrok tadi
+
 }
 
 android {
