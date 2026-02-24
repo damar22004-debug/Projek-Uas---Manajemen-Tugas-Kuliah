@@ -26,6 +26,7 @@ graph TD
 
     UI <--> Controller
     Controller <--> Model
+    Controller <--> Model
     Controller <--> Retrofit
     Retrofit <--> API
     API <--> DB
@@ -39,24 +40,24 @@ graph TD
 Menunjukkan interaksi antara Mahasiswa sebagai aktor utama dengan fungsionalitas aplikasi.
 
 ```mermaid
-useCaseDiagram
-    actor Mahasiswa
+graph TD
+    Mahasiswa((Mahasiswa))
     
-    package "Mobile App" {
-        usecase "Registrasi Akun" as UC1
-        usecase "Login" as UC2
-        usecase "Melihat Statistik Dashboard" as UC3
-        usecase "Menambah Tugas" as UC4
-        usecase "Mengelola Tugas (Edit/Hapus)" as UC5
-        usecase "Melihat Daftar Tugas" as UC6
-    }
+    subgraph "Mobile App"
+        UC1(Registrasi Akun)
+        UC2(Login)
+        UC3(Melihat Statistik Dashboard)
+        UC4(Menambah Tugas)
+        UC5(Mengelola Tugas - Edit/Hapus)
+        UC6(Melihat Daftar Tugas)
+    end
     
-    Mahasiswa --> UC1
-    Mahasiswa --> UC2
-    Mahasiswa --> UC3
-    Mahasiswa --> UC4
-    Mahasiswa --> UC5
-    Mahasiswa --> UC6
+    Mahasiswa --- UC1
+    Mahasiswa --- UC2
+    Mahasiswa --- UC3
+    Mahasiswa --- UC4
+    Mahasiswa --- UC5
+    Mahasiswa --- UC6
 ```
 
 ### 2. Entity Relationship Diagram (ERD)
@@ -86,24 +87,23 @@ erDiagram
 Alur kerja pengguna saat menambahkan tugas baru ke dalam sistem.
 
 ```mermaid
-activityDiagram
-    start
-    :Buka Halaman Add Task;
-    :Input Judul & Mata Kuliah;
-    :Pilih Tenggat Waktu;
-    if (Input Valid?) then (Ya)
-        :Kirim Data ke API (Retrofit);
-        if (Respon Sukses?) then (Ya)
-            :Tampilkan Toast "Berhasil";
-            :Kembali ke Dashboard;
-            :Update List & Statistik;
-        else (Tidak)
-            :Tampilkan Error API;
-        fi
-    else (Tidak)
-        :Tampilkan Error Validasi;
-    fi
-    stop
+stateDiagram-v2
+    [*] --> BukaHalaman: Buka Halaman Add Task
+    BukaHalaman --> InputData: Input Judul & Mata Kuliah
+    InputData --> Validasi: Klik Simpan
+    state Validasi <<choice>>
+    Validasi --> KirimAPI: Valid
+    Validasi --> ErrorValidasi: Tidak Valid
+    ErrorValidasi --> InputData
+    
+    KirimAPI --> ResponAPI: Request API (Retrofit)
+    state ResponAPI <<choice>>
+    ResponAPI --> Sukses: Berhasil (200 OK)
+    ResponAPI --> Gagal: Error (400/500)
+    
+    Sukses --> Dashboard: Toast Berhasil & Kembali
+    Gagal --> InputData: Toast Error
+    Dashboard --> [*]
 ```
 
 ### 4. Sequence Diagram (Autentikasi Login)
