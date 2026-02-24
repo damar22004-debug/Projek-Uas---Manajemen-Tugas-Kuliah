@@ -37,6 +37,30 @@ graph TD
 
 ---
 
+## 🎯 Fitur Utama Keseluruhan
+- **Autentikasi Terpusat**: Satu akun untuk akses di Web dan Mobile.
+- **Dashboard Statistik**: Visualisasi jumlah tugas (Total, Selesai, Belum Mulai, Terlambat).
+- **Manajemen Tugas (CRUD)**: Create, Read, Update, dan Delete tugas dengan mudah.
+- **Sinkronisasi Real-time**: Perubahan di mobile langsung terlihat di web, dan sebaliknya.
+- **UI/UX Konsisten**: Tema visual yang selaras antara platform web dan mobile (Modern & Clean).
+
+---
+
+## 📝 User Stories
+Berikut adalah kebutuhan fungsional sistem dari perspektif pengguna (Mahasiswa):
+
+| Sebagai... | Saya ingin... | Agar... |
+| :--- | :--- | :--- |
+| Mahasiswa | Mendaftar akun baru | Saya bisa menyimpan dan mengelola tugas pribadi saya. |
+| Mahasiswa | Masuk (Login) ke Web dan Mobile dengan akun yang sama | Saya bisa mengakses data saya dari perangkat mana saja secara konsisten. |
+| Mahasiswa | Menambahkan tugas baru (judul, deskripsi, tenggat waktu) | Saya tidak lupa dengan kewajiban kuliah saya. |
+| Mahasiswa | Melihat ringkasan statistik tugas di dashboard | Saya bisa mengetahui progres belajar saya secara cepat. |
+| Mahasiswa | Mengubah status tugas menjadi 'Selesai' | Saya tahu tugas mana yang sudah tuntas dikerjakan. |
+| Mahasiswa | Menghapus tugas yang sudah tidak relevan | Daftar tugas saya tetap bersih dan terorganisir. |
+| Mahasiswa | Mengedit detail tugas yang sudah ada | Saya bisa memperbarui informasi jika ada perubahan instruksi dari dosen. |
+
+---
+
 ## 📊 UML Diagrams
 
 ### 1. Use Case Diagram
