@@ -190,5 +190,5 @@ Aplikasi ini mengusung tema **iOS-style Ultra Minimalist**:
 - **Tooling**: Android Studio Jellyfish
 
 ---
-**PENGEMBANG**: [Your Name/Team]  
-**PROYEK**: UAS Manajemen Tugas Kuliah
+**PENGEMBANG**: Damar 
+**PROJEK**: UAS Manajemen Tugas Kuliah
