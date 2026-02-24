@@ -24,17 +24,6 @@ usecaseDiagram
     Student --> (Update Status Tugas)
     Student --> (Hapus Tugas)
     Student --> (Sinkronisasi API)
-
-Arsitektur Ringkas
-```mermaid
-flowchart LR
-  WebBackend["Web API (Laravel)"]
-  MobileApp["Mobile (Android)"]
-  DB[(Database)]
-  MobileApp -->|REST| WebBackend
-  WebBackend --> DB
-```
-
 Panduan singkat
 - Web: buka folder `web` → `composer install` → konfigurasi `.env` → `php artisan migrate --seed` → `npm install && npm run dev`.
 - Mobile: buka folder `mobile` → pastikan Android SDK terpasang → jalankan emulator → `.\gradlew.bat installDebug`.
