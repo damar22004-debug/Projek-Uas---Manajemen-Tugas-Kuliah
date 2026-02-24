@@ -1,34 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/iv_task_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_glass_card"
+            android:backgroundTint="#F5F5F5"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_top_toTopOf="parent"
+            app:tint="@color/text_secondary"
+            android:contentDescription="Task Icon" />
+
+        <LinearLayout
+            android:id="@+id/ll_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_top_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_edit"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_glass_card"
+                android:backgroundTint="@color/primaryColor"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="@color/white"
+                android:contentDescription="Edit" />
+
+            <ImageView
+                android:id="@+id/btn_delete"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_glass_card"
+                android:backgroundTint="#FFF0F0"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_delete"
+                app:tint="#FF4B4B"
+                android:contentDescription="Delete" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_task_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Judul Tugas"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_top_toBottomOf="@id/iv_task_icon" />
 
         <TextView
             android:id="@+id/tv_task_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Mata Kuliah / Deskripsi"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_top_toBottomOf="@id/tv_task_title" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#F0F0F0"
+            app:layout_top_toBottomOf="@id/tv_task_desc" />
+
+        <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deskripsi tugas akan muncul di sini..."
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            android:layout_marginTop="12dp"
+            android:text="20 Feb, 14:15"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_top_toBottomOf="@id/divider" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_glass_card"
+            android:backgroundTint="#F5F5F5"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"
+            android:text="BELUM MULAI"
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_top_toTopOf="@id/tv_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
