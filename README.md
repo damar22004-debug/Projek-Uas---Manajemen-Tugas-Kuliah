@@ -1,25 +1,29 @@
-﻿# Projek Manajemen Tugas Kuliah
+# 🎓 Projek Manajemen Tugas Kuliah
 
-Repository ini berisi dua modul utama:
+Repository ini adalah sistem terintegrasi untuk membantu mahasiswa mengelola tugas kuliah mereka. Sistem terdiri dari backend API yang kuat dan aplikasi Android yang responsif.
 
-- `web` — backend + frontend web (Laravel + Vite/Tailwind)
-- `mobile` — aplikasi Android (Gradle, Java) untuk Mahasiswa mengelola tugas
+---
 
-Deskripsi singkat
-- Tujuan: menyediakan sistem manajemen tugas kuliah dengan autentikasi, CRUD tugas, dan sinkronisasi antara mobile dan web lewat REST API.
+## 📂 Struktur Folder Utama
 
-Use Case
+* **`web/`**: Backend API & Frontend Web (Laravel + Vite + Tailwind CSS).
+* **`mobile/`**: Aplikasi Android Native (Java + Retrofit + Gradle).
+
+---
+
+## 🎯 Fitur & Use Case
+Sistem ini memungkinkan mahasiswa untuk melakukan manajemen data tugas secara *real-time*.
+
 ```mermaid
 usecaseDiagram
-actor "Mahasiswa" as Student
-Student --> (Register)
-Student --> (Login)
-Student --> (Create Task)
-Student --> (View Tasks)
-Student --> (Update Task)
-Student --> (Delete Task)
-Student --> (Sync Tasks)
-```
+    actor "Mahasiswa" as Student
+    Student --> (Register Akun)
+    Student --> (Login)
+    Student --> (Tambah Tugas Baru)
+    Student --> (Liat Daftar Tugas)
+    Student --> (Update Status Tugas)
+    Student --> (Hapus Tugas)
+    Student --> (Sinkronisasi API)
 
 Arsitektur Ringkas
 ```mermaid
