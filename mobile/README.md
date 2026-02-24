@@ -19,13 +19,22 @@ Aplikasi Android untuk membantu mahasiswa mengelola daftar tugas kuliah secara e
 
 ## 📊 Use Case Diagram
 ```mermaid
-usecaseDiagram
-actor "Mahasiswa" as User
-User --> (Register)
-User --> (Login)
-User --> (Tambah Tugas)
-User --> (Lihat Daftar Tugas)
-User --> (Logout)
+graph LR
+    User((Mahasiswa))
+    
+    subgraph "Sistem Manajemen Tugas"
+        UC1(Register)
+        UC2(Login)
+        UC3(Tambah Tugas)
+        UC4(Lihat Daftar Tugas)
+        UC5(Logout)
+    end
+    
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
 ```
 
 ## 📂 Struktur Proyek
@@ -73,4 +82,4 @@ mobile/
 - Pastikan izin Internet sudah ditambahkan di `AndroidManifest.xml`.
 
 ---
-**Kontribusi**: Silakan buat *pull request* jika ingin menambahkan fitur seperti edit tugas, hapus tugas, atau pengingat (notifikasi).
+
