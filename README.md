@@ -1,81 +1,129 @@
 # 🎓 Sistem Manajemen Tugas Kuliah (Full-Stack)
 
-Solusi manajemen tugas terintegrasi yang dirancang untuk membantu mahasiswa mengelola beban kuliah secara efisien melalui platform Web dan Mobile. Proyek ini menghubungkan backend API yang kuat dengan antarmuka pengguna yang modern dan responsif.
+Solusi manajemen tugas terintegrasi yang dirancang untuk membantu mahasiswa mengelola beban kuliah secara efisien melalui platform Web dan Mobile. Proyek ini menghubungkan backend API Laravel yang kuat dengan antarmuka pengguna Android Native dan Web yang modern.
 
 ---
 
-## 🏗️ Arsitektur Sistem
-Sistem ini menggunakan arsitektur **Client-Server** di mana aplikasi Web dan Mobile berbagi sumber data yang sama melalui RESTful API.
+## 🏗️ Arsitektur Sistem (System Architecture)
+Sistem ini menggunakan arsitektur **Client-Server** terpusat di mana aplikasi Web dan Mobile berbagi sumber data yang sama melalui RESTful API.
 
 ```mermaid
-flowchart TD
-    subgraph "Clients"
+graph TD
+    subgraph "Clients Layer"
         Web["💻 Web Dashboard (Tailwind/Vite)"]
         Mobile["📱 Mobile App (Android Native/Java)"]
     end
 
-    subgraph "Backend Server"
-        API["🚀 Laravel REST API"]
+    subgraph "Middleware / Networking"
+        Retrofit["Retrofit 2 (Mobile)"]
+        Axios["Axios (Web)"]
+    end
+
+    subgraph "Backend Server (Laravel)"
+        API["🚀 REST API Controller"]
+        Sanctum["🔐 Sanctum Auth"]
+        Eloquent["💾 Eloquent ORM"]
+    end
+
+    subgraph "Database Layer"
         DB[(🗄️ MySQL Database)]
     end
 
-    Web <-->|JSON/HTTP| API
-    Mobile <-->|Retrofit/HTTP| API
-    API <--> Eloquent/SQL <--> DB
+    Web <--> Axios <--> API
+    Mobile <--> Retrofit <--> API
+    API <--> Sanctum
+    API <--> Eloquent <--> DB
 ```
 
 ---
 
-## 📂 Komponen Proyek
+## 📊 UML Diagrams
 
-### 1. [Web Dashboard & API](./web)
-Backend utama yang dibangun menggunakan **Laravel**. Berfungsi sebagai penyedia API sekaligus dashboard administrasi web.
-- **Tech Stack**: PHP (Laravel), Tailwind CSS, Vite, MySQL.
-- **Fitur**: Manajemen user, dashboard statistik, REST API endpoints, autentikasi sanctum.
+### 1. Use Case Diagram
+Menjelaskan interaksi aktor (Mahasiswa) dengan sistem secara keseluruhan baik melalui web maupun mobile.
 
-### 2. [Mobile Application](./mobile)
-Aplikasi Android native yang dirancang untuk akses cepat saat bepergian.
-- **Tech Stack**: Java, Retrofit 2, Material Design 3.
-- **Fitur**: UI Modern (Glassmorphism), Sinkronisasi Real-time.
-
----
-
-## 🎯 Fitur Utama Keseluruhan
-- **Autentikasi Terpusat**: Satu akun untuk akses di Web dan Mobile.
-- **Dashboard Statistik**: Visualisasi jumlah tugas (Total, Selesai, Belum Mulai, Terlambat).
-- **Manajemen Tugas (CRUD)**: Create, Read, Update, dan Delete tugas dengan mudah.
-- **Sinkronisasi Real-time**: Perubahan di mobile langsung terlihat di web, dan sebaliknya.
-- **UI/UX Konsisten**: Tema visual yang selaras antara platform web dan mobile (Modern & Clean).
-
----
-
-## 📊 Use Case Diagram
 ```mermaid
-graph LR
-    User((Mahasiswa))
+graph TD
+    Mahasiswa((Mahasiswa))
     
-    subgraph "Sistem Terintegrasi"
-        UC1(Registrasi Akun)
-        UC2(Login Multi-platform)
-        UC3(Manajemen Tugas)
-        UC4(Pantau Statistik Progres)
-        UC5(Sinkronisasi Cloud)
+    subgraph "Sistem Manajemen Tugas"
+        UC1(Registrasi & Autentikasi)
+        UC2(Manajemen Tugas - CRUD)
+        UC3(Pantau Dashboard Statistik)
+        UC4(Sinkronisasi Data Cloud)
     end
     
-    User --> UC1
-    User --> UC2
-    User --> UC3
-    User --> UC4
-    User --> UC5
+    Mahasiswa --- UC1
+    Mahasiswa --- UC2
+    Mahasiswa --- UC3
+    Mahasiswa --- UC4
 ```
 
----
+### 2. Entity Relationship Diagram (ERD)
+Struktur basis data terpusat yang melayani aplikasi Web dan Mobile.
 
-##  UML Diagrams
-Untuk memberikan gambaran yang lebih teknis, berikut adalah beberapa diagram UML yang merepresentasikan struktur dan alur sistem.
+```mermaid
+erDiagram
+    USERS ||--o{ TASKS : owns
+    USERS {
+        int id PK
+        string name
+        string email
+        string password
+    }
+    TASKS {
+        int id PK
+        int user_id FK
+        string title
+        string description
+        string category
+        datetime due_date
+        string status
+    }
+```
 
-### 1. Class Diagram
-Diagram ini menunjukkan entitas utama dalam sistem (`User` dan `Task`) beserta atribut dan relasinya.
+### 3. Activity Diagram (Alur Kerja Manajemen Tugas)
+Proses umum dari pembuatan tugas hingga sinkronisasi status.
+
+```mermaid
+stateDiagram-v2
+    [*] --> InputTugas: User membuat tugas baru
+    InputTugas --> Validasi: Kirim ke API
+    state Validasi <<choice>>
+    Validasi --> SimpanDB: Data Valid
+    Validasi --> Error: Data Tidak Valid
+    Error --> InputTugas
+    
+    SimpanDB --> UpdateUI: Broadcast/Sync
+    UpdateUI --> Dashboard: Tampilkan di Web & Mobile
+    Dashboard --> [*]
+```
+
+### 4. Sequence Diagram (Sinkronisasi Multi-platform)
+Bagaimana perubahan di satu platform (misal: Mobile) tercermin di platform lain (Web).
+
+```mermaid
+sequenceDiagram
+    participant Mob as Mobile App
+    participant Web as Web Dashboard
+    participant API as Laravel Server
+    participant DB as MySQL
+
+    Note over Mob: User tandai tugas 'Selesai'
+    Mob->>API: PATCH /api/tasks/{id} (status: completed)
+    API->>DB: UPDATE tasks SET status = 'completed'
+    DB-->>API: Success
+    API-->>Mob: 200 OK (Data updated)
+    Note over Web: User Refresh/Auto-sync
+    Web->>API: GET /api/tasks
+    API->>DB: SELECT * FROM tasks
+    DB-->>API: Return updated data
+    API-->>Web: JSON Response
+    Note over Web: Dashboard menampilkan status terbaru
+```
+
+### 5. Class Diagram (Core System)
+Struktur logika inti yang menghubungkan User dan Task.
 
 ```mermaid
 classDiagram
@@ -83,59 +131,56 @@ classDiagram
         +Integer id
         +String name
         +String email
-        +String password
+        +login()
+        +register()
     }
     class Task {
         +Integer id
-        +Integer userId
         +String title
-        +String description
-        +Date dueDate
         +String status
+        +Date dueDate
+        +create()
+        +update()
+        +delete()
     }
 
-    User "1" -- "0..*" Task : has
+    User "1" -- "0..*" Task : manages
 ```
 
-### 2. Sequence Diagram (Proses Login)
-Diagram ini menjelaskan langkah-langkah yang terjadi saat pengguna melakukan login, mulai dari client hingga database.
+### 6. State Diagram (Siklus Hidup Tugas)
+Transisi status tugas yang berlaku di seluruh platform.
 
 ```mermaid
-sequenceDiagram
-    participant Client as Mobile/Web App
-    participant Server as Laravel API
-    participant DB as Database
-
-    Client->>Server: POST /api/login (email, password)
-    Server->>Server: Validate request
-    Server->>DB: SELECT * FROM users WHERE email = ?
-    DB-->>Server: Return user data
-    Server->>Server: Verify password
-    alt Credentials Correct
-        Server->>Server: Generate Sanctum Token
-        Server-->>Client: 200 OK (token, user)
-    else Credentials Incorrect
-        Server-->>Client: 401 Unauthorized
-    end
-    Client->>Client: Store token
-    Client->>Client: Navigate to Main Screen
+stateDiagram-v2
+    [*] --> BelumMulai
+    BelumMulai --> DalamProses : Mulai Kerja
+    DalamProses --> Selesai : Klik Selesai
+    DalamProses --> Terlambat : Melewati Deadline
+    BelumMulai --> Terlambat : Melewati Deadline
+    Selesai --> [*]
 ```
 
 ---
 
-## 🚀 Panduan Memulai Cepat
+## 📂 Komponen Utama
 
-### Setup Backend (Web)
-1. Masuk ke folder `web/`.
-2. Jalankan `composer install` & `npm install`.
-3. Salin `.env.example` ke `.env` dan atur database.
-4. Jalankan migrasi: `php artisan migrate`.
-5. Jalankan server: `php artisan serve`.
+### 1. [Web Dashboard & API](./web)
+Backend utama yang dibangun menggunakan **Laravel 11**. Berfungsi sebagai *Single Source of Truth*.
+- **Tech Stack**: PHP (Laravel), Tailwind CSS, Vite, MySQL.
+- **Fitur**: UI Modern, REST API, Laravel Sanctum Auth.
 
-### Setup Mobile (Android)
-1. Buka folder `mobile/` menggunakan **Android Studio**.
-2. Sesuaikan `BASE_URL` di `RetrofitClient.java` dengan IP server Laravel Anda.
-3. Build dan jalankan aplikasi di Emulator atau Perangkat Fisik.
+### 2. [Mobile Application](./mobile)
+Aplikasi Android native untuk aksesibilitas tinggi dan manajemen tugas *on-the-go*.
+- **Tech Stack**: Java, Retrofit 2, Material 3 Design.
+- **Style**: iOS-style Ultra Minimalist.
 
 ---
-**Kontribusi**: Silakan ajukan *Pull Request* atau laporkan *Issues* jika menemukan kendala.
+
+## 🚀 Panduan Instalasi Cepat
+
+1. **Backend**: Masuk folder `web/`, jalankan `composer install`, `php artisan migrate`, dan `php artisan serve`.
+2. **Mobile**: Buka folder `mobile/` di Android Studio, sesuaikan IP di `RetrofitClient.java`, lalu Build.
+
+---
+**Kontribusi**: Damar  
+**Proyek**: UAS Manajemen Tugas Kuliah
