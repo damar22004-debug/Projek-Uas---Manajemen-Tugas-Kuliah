@@ -19,4 +19,8 @@
     <color name="text_primary">#1A1A1A</color>
     <color name="text_secondary">#757575</color>
     <color name="text_blue">#007BFF</color>
+
+    <!-- Missing colors for register screen -->
+    <color name="textColorPrimary">#1A1A1A</color>
+    <color name="textColorSecondary">#757575</color>
 </resources>

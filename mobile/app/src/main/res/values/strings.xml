@@ -13,4 +13,9 @@
     <string name="name_hint">Nama Lengkap</string>
     <string name="register_btn">Daftar</string>
     <string name="already_have_account">Sudah punya akun? Login di sini</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="action_settings">Settings</string>
 </resources>

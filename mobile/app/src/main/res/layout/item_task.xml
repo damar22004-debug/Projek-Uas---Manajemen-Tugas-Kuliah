@@ -24,7 +24,7 @@
             android:padding="8dp"
             android:src="@android:drawable/ic_menu_edit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_top_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/text_secondary"
             android:contentDescription="Task Icon" />
 
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_top_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/btn_edit"
@@ -71,7 +71,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_top_toBottomOf="@id/iv_task_icon" />
+            app:layout_constraintTop_toBottomOf="@id/iv_task_icon" />
 
         <TextView
             android:id="@+id/tv_task_desc"
@@ -83,7 +83,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_top_toBottomOf="@id/tv_task_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_task_title" />
 
         <View
             android:id="@+id/divider"
@@ -91,7 +91,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="#F0F0F0"
-            app:layout_top_toBottomOf="@id/tv_task_desc" />
+            app:layout_constraintTop_toBottomOf="@id/tv_task_desc" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -102,7 +102,7 @@
             android:textColor="@color/text_secondary"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_top_toBottomOf="@id/divider" />
+            app:layout_constraintTop_toBottomOf="@id/divider" />
 
         <TextView
             android:id="@+id/tv_status"
@@ -118,7 +118,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_top_toTopOf="@id/tv_date" />
+            app:layout_constraintTop_toTopOf="@id/tv_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
