@@ -8,6 +8,7 @@
     tools:context=".RegisterActivity">
 
     <LinearLayout
+        android:id="@+id/register_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -48,13 +49,11 @@
             android:layout_marginBottom="16dp"
             android:hint="Nama Lengkap"
             app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
-
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxStrokeWidth="0dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
@@ -69,13 +68,11 @@
             android:layout_marginBottom="16dp"
             android:hint="Email"
             app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
-
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxStrokeWidth="0dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
@@ -90,14 +87,12 @@
             android:layout_marginBottom="32dp"
             android:hint="Kata Sandi"
             app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
             app:passwordToggleEnabled="true">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
@@ -111,8 +106,6 @@
             android:layout_height="56dp"
             android:text="Daftar Sekarang"
             android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:cornerRadius="28dp"
             android:backgroundTint="@color/primaryColor" />
 
@@ -122,8 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Sudah punya akun? Login"
-            android:textColor="@color/primaryColor"
-            android:textSize="14sp" />
+            android:textColor="@color/primaryColor" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

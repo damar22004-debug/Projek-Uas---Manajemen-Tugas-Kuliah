@@ -9,17 +9,17 @@ import retrofit2.http.POST;
 
 public interface TaskService {
     @FormUrlEncoded
-    @POST("login")
-    Call<Void> loginUser(@Field("email") String email, @Field("password") String password);
-
-    @FormUrlEncoded
     @POST("register")
     Call<Void> registerUser(@Field("name") String name, @Field("email") String email, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("login")
+    Call<Void> loginUser(@Field("email") String email, @Field("password") String password);
+
     @GET("tasks")
-    Call<List<Task>> getTasks();
+    Call<List<Task>> getTasks(); // Memperbaiki error di MainActivity
 
     @FormUrlEncoded
     @POST("tasks")
-    Call<Void> addTask(@Field("name") String name, @Field("description") String description);
+    Call<Void> addTask(@Field("title") String title, @Field("description") String desc); // Memperbaiki error di AddTaskActivity
 }
