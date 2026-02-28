@@ -8,15 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    // Tampil dashboard (Otomatis deteksi login bray)
     public function index()
     {
-        // Ambil data tugas punya user yang login doang
         $tasks = Task::where('user_id', Auth::id())->latest()->get();
         return view('dashboard', compact('tasks'));
     }
 
-    // Simpan data (Gak perlu input user_id di form lagi)
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +30,7 @@ class TaskController extends Controller
             'deadline' => now()->addDays(2),
         ]);
 
-        return redirect()->back()->with('success', 'Tugas masuk bray!');
+        return redirect()->back()->with('success', 'Tugas masuk!');
     }
 
     // FIX Error: Call to undefined method update()
@@ -51,21 +48,21 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    // FIX Error: Call to undefined method destroy()// Tambahkan ini di dalam class TaskController atau TaskApiController
+    // FIX Error: Call to undefined method destroy()
 public function destroy($id)
 {
     // 1. Cari tugasnya berdasarkan ID
     $task = \App\Models\Task::find($id);
 
-    // 2. Kalau data gak ketemu, kasih tau biar gak crash
+    // 2. Jika data tidak ada
     if (!$task) {
-        return response()->json(['message' => 'Data kaga ada bray!'], 404);
+        return response()->json(['message' => 'Data Tidak ada!'], 404);
     }
 
     // 3. Eksekusi Hapus
     $task->delete();
 
     // 4. Kasih respon sukses
-    return response()->json(['message' => 'Tugas berhasil diapus!']);
+    return response()->json(['message' => 'Tugas berhasil dihapus!']);
 }
 }
